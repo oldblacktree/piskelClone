@@ -1,3 +1,0 @@
-- [YouTube video](https://www.youtube.com/watch?v=KDi8RtGks1k);
-- [Reveal presentation](https://oldblacktree.github.io/presentation/);
-- [Transcript of presentation](https://github.com/oldblacktree/presentation/blob/master/README.md)
