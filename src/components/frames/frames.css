@@ -1,0 +1,111 @@
+.frames {
+  display: flex;
+  flex-direction: column;
+}
+
+.frames__item {
+  position: relative;
+  width: 102px;
+  height: 102px;
+  margin: 2px 0;
+  border: 3px solid var(--color-lite-gray);
+  border-radius: 2px;
+  background-color: var(--color-lite-gray);
+}
+
+.frames__item:hover .frames__button {
+  visibility: visible;
+}
+
+.frames__item--active {
+  border-color: var(--color-gold);
+}
+
+.frames__canvas {
+  width: 100%;
+  height: 100%;
+  background-color: var(--canvas-background)
+}
+
+.frames__button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #4444;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.frames__button--position {
+  top: 0;
+  left: 0;
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+.frames__button--position--active {
+  top: 0;
+  left: 0;
+  visibility: visible;
+  background-color: var(--color-gold);
+  color: var(--color-background);
+}
+
+.frames__button--delete {
+  top: 0;
+  right: 0;
+  background-image: url('../../assets/img/icons.png');
+  background-position: -274px -105px;
+  background-repeat: no-repeat;
+}
+
+.frames__button--move {
+  bottom: 0;
+  left: 0;
+  background-image: url('../../assets/img/icons.png');
+  background-position: -274px -45px;
+  background-repeat: no-repeat;
+}
+
+.frames__button--duplicate {
+  bottom: 0;
+  right: 0;
+  background-image: url('../../assets/img/icons.png');
+  background-position: -274px -76px;
+  background-repeat: no-repeat;
+}
+
+.add-frame {
+  border: 3px solid var(--color-lite-gray);
+  border-radius: 2px;
+  color: var(--color-lite-gray);
+  font-size: 14px;
+  width: 102px;
+  padding: 6px 6px 6px 36px;
+}
+
+.add-frame:hover {
+  border-color: var(--color-gold);
+  cursor: pointer;
+}
+
+.add-frame__text {
+  position: relative;
+}
+
+.add-frame__text::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -32px;
+  top: 1px;
+  width: 25px;
+  height: 25px;
+  background-image: url('../../assets/img/icons.png');
+  background-position: -274px -157px;
+  background-repeat: no-repeat;
+}
