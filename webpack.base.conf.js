@@ -84,7 +84,7 @@ module.exports = {
       // hash: false,
       // template: `${PATHS.src}/index.html`,
       // filename: './index.html',
-      title: 'YouTube client',
+      title: 'Piskel clone',
       // favicon: './src/favicon.ico',
       meta: { viewport: 'width=device-width, initial-scale=1' },
     }),

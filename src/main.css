@@ -517,3 +517,7 @@ a {
   width: calc(100% - 484px);
   background-color: var(--color-lite-gray);
 }
+.settings-column {
+  width: 220px;
+  padding: 0 10px;
+}

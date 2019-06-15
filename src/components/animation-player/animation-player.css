@@ -1,0 +1,49 @@
+.animation-player {
+  position: relative;
+}
+
+.animation-player:hover .animation-player__button {
+  visibility: visible;
+}
+
+.animation-player__button {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  visibility: hidden;
+  border: 2px solid #fff;
+  cursor: pointer;
+
+}
+
+.animation-player__button:hover {
+  border-color: var(--color-gold);
+}
+
+.animation-player__button--popup {
+  top: 10px;
+  right: 10px;
+  background-image: url('../../assets/img/icons.png');
+  background-position: -295px -183px;
+  background-repeat: no-repeat;
+}
+
+.animation-player__canvas {
+  background-color: var(--canvas-background);
+}
+
+.cursor-position {
+  color: var(--color-gold);
+}
+
+.fps {
+  height: 26px;
+  background-color: var(--color-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fps__display {
+  padding: 0 10px;
+}
