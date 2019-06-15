@@ -33,6 +33,13 @@ module.exports = {
     rules: [
       // { enforce: 'pre', test: /\.js$/, loader: 'eslint-loader' },
       {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'html-loader',
+        },
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: '/node_modules',
@@ -52,7 +59,9 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: { sourceMap: true },
+            options: {
+              sourceMap: true,
+            },
           },
         ],
       },
@@ -65,7 +74,10 @@ module.exports = {
     new CopyWebpackPlugin([
       // { from: './src/**/*.png', to: `${PATHS.assets}img` },
       // { from: `${PATHS.src}/qqq`, to: `${PATHS.assets}img` },
-      // { from: `${PATHS.src}/components/tools/img`, to: `${PATHS.assets}img` }
+      {
+        from: `${PATHS.src}/components/header/assets/img`,
+        to: `${PATHS.assets}img`,
+      },
       // { from: `${PATHS.src}/static`, to: '' },
     ]),
     new HtmlWebpackPlugin({
