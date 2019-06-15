@@ -486,3 +486,12 @@ a {
   --color-background: #1E1E1E;
   --canvas-background: #cccc;
 }
+
+.main {
+  width: 100%;
+  display: flex;
+  background-color: var(--color-background);
+  padding: 5px 0;
+  height: calc(100vh - 40px);
+  color: var(--color-lite-gray);
+}
