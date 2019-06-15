@@ -495,3 +495,12 @@ a {
   height: calc(100vh - 40px);
   color: var(--color-lite-gray);
 }
+
+.tools-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100px;
+}
