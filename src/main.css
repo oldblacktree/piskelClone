@@ -521,3 +521,8 @@ a {
   width: 220px;
   padding: 0 10px;
 }
+
+.menu-column {
+  display: flex;
+  align-items: center;
+}

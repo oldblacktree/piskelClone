@@ -1,0 +1,51 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+}
+
+.menu__item {
+  width: 46px;
+  height: 46px;
+  background-color: var(--color-gray);
+  margin: 1px;
+  cursor: pointer;
+}
+
+.menu__item:hover {
+  background-color: #444a;
+}
+
+.menu__item--preference {
+  background-image: url('../../assets/img/icons.png');
+  background-position: -46px -182px;
+  background-repeat: no-repeat;
+}
+
+.menu__item--resize {
+  background-image: url('../../assets/img/icons.png');
+  background-position: -137px -182px;
+  background-repeat: no-repeat;
+}
+
+.menu__item--save {
+  background-image: url('../../assets/img/icons.png');
+  background-position: -228px 0px;
+  background-repeat: no-repeat;
+}
+
+
+.menu__item--export {
+  background-image: url('../../assets/img/icons.png');
+  background-position: 0px -182px;
+  background-repeat: no-repeat;
+}
+
+
+.menu__item--import {
+  background-image: url('../../assets/img/icons.png');
+  background-position: -91px -182px;
+  background-repeat: no-repeat;
+}
