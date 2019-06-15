@@ -504,3 +504,16 @@ a {
   height: 100%;
   width: 100px;
 }
+.frames-column {
+  display: flex;
+  flex-direction: column;
+  padding: 0 7px;
+}
+.main-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: calc(100% - 484px);
+  background-color: var(--color-lite-gray);
+}
