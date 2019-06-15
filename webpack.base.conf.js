@@ -81,9 +81,12 @@ module.exports = {
       // { from: `${PATHS.src}/static`, to: '' },
     ]),
     new HtmlWebpackPlugin({
-      hash: false,
-      template: `${PATHS.src}/index.html`,
-      filename: './index.html',
+      // hash: false,
+      // template: `${PATHS.src}/index.html`,
+      // filename: './index.html',
+      title: 'YouTube client',
+      // favicon: './src/favicon.ico',
+      meta: { viewport: 'width=device-width, initial-scale=1' },
     }),
   ],
 };
