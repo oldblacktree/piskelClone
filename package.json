@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src/",
-    "dev": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "dev": "webpack-dev-server --open --config webpack.dev.conf.js",
+    "build": "webpack --config webpack.build.conf.js"
   },
   "repository": {
     "type": "git",
@@ -22,17 +22,20 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.17.3",
+    "file-loader": "^4.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.4.1",
+    "webpack-merge": "^4.2.1"
   }
 }
