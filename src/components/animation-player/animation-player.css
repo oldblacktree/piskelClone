@@ -32,10 +32,6 @@
   background-color: var(--canvas-background);
 }
 
-.cursor-position {
-  color: var(--color-gold);
-}
-
 .fps {
   height: 26px;
   background-color: var(--color-gray);

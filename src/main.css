@@ -526,3 +526,7 @@ a {
   display: flex;
   align-items: center;
 }
+
+.cursor-position {
+  color: var(--color-gold);
+}
