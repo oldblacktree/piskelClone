@@ -16,7 +16,8 @@ module.exports = {
   },
 
   entry: {
-    app: PATHS.src,
+    // app: PATHS.src,
+    app: `${PATHS.src}/index.js`,
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
@@ -41,6 +42,11 @@ module.exports = {
       },
       {
         test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules',
+      },
+      {
+        test: /\.jsx$/,
         loader: 'babel-loader',
         exclude: '/node_modules',
       },
