@@ -1,11 +1,13 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './App.css';
+import Header from './header/header.jsx'
 
 // class Square extends React.Component {
 //   render() {
 //     return (
 //       <button className="square">
-//         {/* TODO */}
+//         {this.props.value}
 //       </button>
 //     );
 //   }
@@ -13,7 +15,7 @@
 
 // class Board extends React.Component {
 //   renderSquare(i) {
-//     return <Square />;
+//     return <Square value={i}/>;
 //   }
 
 //   render() {
@@ -42,26 +44,25 @@
 //   }
 // }
 
-// class Game extends React.Component {
-//   render() {
-//     return (
-//       <div className="game">
-//         <div className="game-board">
-//           <Board />
-//         </div>
-//         <div className="game-info">
-//           <div>{/* status */}</div>
-//           <ol>{/* TODO */}</ol>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+class App extends React.Component {
+  render() {
+    return (
+      <>
+        <Header />
+        <main className='main'>
+          <section className="tools-colunm"></section>
+          <section className="frames-column"></section>
+          <section className="main-column"></section>
+          <section className="settings-column"></section>
+          <section className="menu-column"></section>
+        </main>
+      </>
+    );
+  }
+}
 
-// // ========================================
+// ========================================
 
-// ReactDOM.render(
-//   <Game />,
-//   document.getElementById('root')
-// );
+ReactDOM.render(<App />,document.getElementById('root'));
+
 
