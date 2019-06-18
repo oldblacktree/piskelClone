@@ -16,8 +16,8 @@ module.exports = {
   },
 
   entry: {
-    // app: PATHS.src,
-    app: `${PATHS.src}/index.js`,
+    app: PATHS.src,
+    // app: `${PATHS.src}/index.js`,
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
@@ -87,12 +87,12 @@ module.exports = {
       // { from: `${PATHS.src}/static`, to: '' },
     ]),
     new HtmlWebpackPlugin({
-      // hash: false,
-      // template: `${PATHS.src}/index.html`,
-      // filename: './index.html',
-      title: 'Piskel clone',
+      hash: false,
+      template: `${PATHS.src}/index.html`,
+      filename: './index.html',
+      // title: 'Piskel clone',
       // favicon: './src/favicon.ico',
-      meta: { viewport: 'width=device-width, initial-scale=1' },
+      // meta: { viewport: 'width=device-width, initial-scale=1' },
     }),
   ],
 };
