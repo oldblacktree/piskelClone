@@ -2,24 +2,18 @@ import React from 'react';
 import './palette.css';
 
 export default class Palette extends React.Component {
-    constructor(props) {
-      super(props);
-      this.handlerPrimaryColor = this.handlerPrimaryColor.bind(this);
-      this.handlerSecondaryColor = this.handlerSecondaryColor.bind(this);
-      this.handlerSwap = this.handlerSwap.bind(this);
-    }
 
-    handlerPrimaryColor(e) {
+    handlePrimaryColor(e) {
       let color = e.target.value;
       this.props.updateStatePrimaryColor(color);
     }
 
-    handlerSecondaryColor(e) {
+    handleSecondaryColor(e) {
       let color = e.target.value;
       this.props.updateStateSecondaryColor(color);
     }
 
-    handlerSwap() {
+    handleSwap() {
       let primaryColor = this.props.primaryColor;
       let secondaryColor = this.props.secondaryColor;
       this.props.updateStatePrimaryColor(secondaryColor)
@@ -29,8 +23,9 @@ export default class Palette extends React.Component {
   render() {
     return (
       <div className="palette">
-        <input className="palette__primary" id="palette__primary" type="color" onChange={this.handlerPrimaryColor}/>
-        <input className="palette__secondary" id="palette__secondary" type="color" onChange={this.handlerSecondaryColor} />
+        {/* <input className="palette__primary" id="palette__primary" type="color" onChange={this.handlePrimaryColor}/> */}
+        <input className="palette__primary" id="palette__primary" type="color" onChange={(e) => this.handlePrimaryColor(e)}/>
+        <input className="palette__secondary" id="palette__secondary" type="color" onChange={(e) =>this.handleSecondaryColor(e)} />
         <label htmlFor='palette__primary'>
           {/* <div className="palette__item palette__item--primary" style={{ backgroundColor: this.props.primaryColor}}></div> */}
           <div className="palette__item palette__item--primary" style={{ backgroundColor: this.props.primaryColor}}></div>
@@ -38,7 +33,7 @@ export default class Palette extends React.Component {
         <label htmlFor="palette__secondary">
           <div className="palette__item palette__item--secondary" style={{ backgroundColor: this.props.secondaryColor}}></div>
         </label>
-        <div className="palette__swap-color" onClick={this.handlerSwap}></div>
+        <div className="palette__swap-color" onClick={(e) => this.handleSwap(e)}></div>
       </div>
     )
   }

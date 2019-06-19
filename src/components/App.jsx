@@ -64,10 +64,6 @@ class App extends React.Component {
     this.updateStateProperty = this.updateStateProperty.bind(this);
   }
 
-  // handleChangeColor(e) {
-  //   this.setState({primaryColor: e.target.value});
-  //   console.log(this.state)
-  // }
   updateStateProperty(property) {
     return (value) => {
       this.setState({[property]: value});
