@@ -1,56 +1,92 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
-import Header from './header/header.jsx'
+import Header from './header/header.jsx';
+import PenSize from './pen-size/pen-size.jsx';
+import Tools from './tools/tools.jsx';
+import Palette from './palette/palette.jsx';
 
-// class Square extends React.Component {
+// class ToolsColumn extends React.Component {
 //   render() {
 //     return (
-//       <button className="square">
-//         {this.props.value}
-//       </button>
+//       <section className="tools-column">
+//         <PenSize />
+//         <Tools />
+//         <Palette />
+//       </section>
+//     );
+//   }
+// }
+// class FramesColumn extends React.Component {
+//   render() {
+//     return (
+//       <section className="frames-column"></section>
 //     );
 //   }
 // }
 
-// class Board extends React.Component {
-//   renderSquare(i) {
-//     return <Square value={i}/>;
-//   }
-
+// class MainColumn extends React.Component {
 //   render() {
-//     const status = 'Next player: X';
-
 //     return (
-//       <div>
-//         <div className="status">{status}</div>
-//         <div className="board-row">
-//           {this.renderSquare(0)}
-//           {this.renderSquare(1)}
-//           {this.renderSquare(2)}
-//         </div>
-//         <div className="board-row">
-//           {this.renderSquare(3)}
-//           {this.renderSquare(4)}
-//           {this.renderSquare(5)}
-//         </div>
-//         <div className="board-row">
-//           {this.renderSquare(6)}
-//           {this.renderSquare(7)}
-//           {this.renderSquare(8)}
-//         </div>
-//       </div>
+//       <section className="main-column"></section>
 //     );
 //   }
 // }
+
+// class SettingsColumn extends React.Component {
+//   render() {
+//     return (
+//       <section className="settings-column"></section>
+//     );
+//   }
+// }
+
+// class MenuColumn extends React.Component {
+//   render() {
+//     return (
+//       <section className="menu-column"></section>
+//     );
+//   }
+// }
+const initialState = {
+  // canvasWidth: 800,
+  // canvasHeight: 800,
+  // canvasCellCount: 32,
+
+  primaryColor: "#000000",
+  secondaryColor: "#FFFFFF",
+}
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = props.state;
+    this.updateStateProperty = this.updateStateProperty.bind(this);
+  }
+
+  // handleChangeColor(e) {
+  //   this.setState({primaryColor: e.target.value});
+  //   console.log(this.state)
+  // }
+  updateStateProperty(property) {
+    return (value) => {
+      this.setState({[property]: value});
+    };
+  }
+
   render() {
     return (
       <>
         <Header />
         <main className='main'>
-          <section className="tools-colunm"></section>
+          <section className="tools-column">
+            <PenSize />
+            <Tools />
+            <Palette updateStatePrimaryColor = {this.updateStateProperty('primaryColor')}
+              updateStateSecondaryColor={this.updateStateProperty('secondaryColor')}
+              primaryColor = {this.state.primaryColor}
+              secondaryColor={this.state.secondaryColor}/>
+          </section>
           <section className="frames-column"></section>
           <section className="main-column"></section>
           <section className="settings-column"></section>
@@ -61,8 +97,9 @@ class App extends React.Component {
   }
 }
 
+
 // ========================================
 
-ReactDOM.render(<App />,document.getElementById('root'));
+ReactDOM.render(<App state={initialState}/>,document.getElementById('root'));
 
 

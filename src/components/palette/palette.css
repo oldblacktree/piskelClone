@@ -16,7 +16,6 @@
   top: 10px;
   left: 10px;
   z-index: 10;
-  background-color: #000;
 }
 
 .palette__item--secondary {
@@ -24,7 +23,6 @@
   top: 40px;
   left: 40px;
   z-index: 1;
-  background-color: #000;
 }
 
 .palette__primary,
