@@ -61,16 +61,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.state;
-    this.updateStateProperty = this.updateStateProperty.bind(this);
+
   }
 
-  updateStateProperty(property) {
+  updateStateProperty = (property) => {
     return (value) => {
       this.setState({[property]: value});
     };
   }
 
+  handleSwap = () => {
+    const { primaryColor, secondaryColor} = this.state;
+
+    this.setState({
+      primaryColor: secondaryColor,
+      secondaryColor: primaryColor,
+    })
+  }
+
   render() {
+    const {primaryColor, secondaryColor} = this.state;
+
     return (
       <>
         <Header />
@@ -78,10 +89,13 @@ class App extends React.Component {
           <section className="tools-column">
             <PenSize />
             <Tools />
-            <Palette updateStatePrimaryColor = {this.updateStateProperty('primaryColor')}
+            <Palette
+              primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
+              updateStatePrimaryColor={this.updateStateProperty('primaryColor')}
               updateStateSecondaryColor={this.updateStateProperty('secondaryColor')}
-              primaryColor = {this.state.primaryColor}
-              secondaryColor={this.state.secondaryColor}/>
+              swapColors={this.handleSwap}
+              />
           </section>
           <section className="frames-column"></section>
           <section className="main-column"></section>
