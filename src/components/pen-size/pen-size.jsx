@@ -1,16 +1,39 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './pen-size.css';
 
 export default class PenSize extends React.Component {
+  constructor(props) {
+    super(props);
+    this.penSizeNumbers = [1,2,3,4];
+  }
+
+  handlePensizeItemClik = (item)=> () => {
+    this.props.updateStatePenSize(item);
+  }
+
+  createPenSizeItems = () => {
+  const arr = this.penSizeNumbers;
+  const active = 'pen-size__item--active';
+
+  return  arr.map(item => {
+    const itemClass = `pen-size__item--size-${ item }`;
+    const isActive = item === this.props.penSize ? active : '';
+
+    return (
+      <li
+        className={`pen-size__item ${itemClass} ${isActive}`}
+        key={item}
+        onClick={this.handlePensizeItemClik(item)}
+      />
+    )
+  })}
+
   render() {
     return (
       <ul className="pen-size">
-        <li className="pen-size__item pen-size__item--size-1 pen-size__item--active"></li>
-        <li className="pen-size__item pen-size__item--size-2 "></li>
-        <li className="pen-size__item pen-size__item--size-3"></li>
-        <li className="pen-size__item pen-size__item--size-4"></li>
+        {this.createPenSizeItems()}
       </ul>
     );
   }
 }
+

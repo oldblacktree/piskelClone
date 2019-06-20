@@ -6,63 +6,17 @@ import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
 
-// class ToolsColumn extends React.Component {
-//   render() {
-//     return (
-//       <section className="tools-column">
-//         <PenSize />
-//         <Tools />
-//         <Palette />
-//       </section>
-//     );
-//   }
-// }
-// class FramesColumn extends React.Component {
-//   render() {
-//     return (
-//       <section className="frames-column"></section>
-//     );
-//   }
-// }
-
-// class MainColumn extends React.Component {
-//   render() {
-//     return (
-//       <section className="main-column"></section>
-//     );
-//   }
-// }
-
-// class SettingsColumn extends React.Component {
-//   render() {
-//     return (
-//       <section className="settings-column"></section>
-//     );
-//   }
-// }
-
-// class MenuColumn extends React.Component {
-//   render() {
-//     return (
-//       <section className="menu-column"></section>
-//     );
-//   }
-// }
-const initialState = {
-  // canvasWidth: 800,
-  // canvasHeight: 800,
-  // canvasCellCount: 32,
-
-  primaryColor: "#000000",
-  secondaryColor: "#FFFFFF",
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
 
+    this.state = {
+      penSize: 4,
+      primaryColor: "#000000",
+      secondaryColor: "#FFFFFF",
+    }
   }
+
 
   updateStateProperty = (property) => {
     return (value) => {
@@ -80,21 +34,24 @@ class App extends React.Component {
   }
 
   render() {
-    const {primaryColor, secondaryColor} = this.state;
+    const {primaryColor, secondaryColor, penSize} = this.state;
 
     return (
       <>
         <Header />
         <main className='main'>
           <section className="tools-column">
-            <PenSize />
+            <PenSize
+              penSize={penSize}
+              updateStatePenSize={this.updateStateProperty('penSize')}
+            />
             <Tools />
             <Palette
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
-              updateStatePrimaryColor={this.updateStateProperty('primaryColor')}
-              updateStateSecondaryColor={this.updateStateProperty('secondaryColor')}
-              swapColors={this.handleSwap}
+              onPrimaryColorChange={this.updateStateProperty('primaryColor')}
+              onSecondaryColorChange={this.updateStateProperty('secondaryColor')}
+              onSwapColors={this.handleSwap}
               />
           </section>
           <section className="frames-column"></section>
@@ -110,6 +67,6 @@ class App extends React.Component {
 
 // ========================================
 
-ReactDOM.render(<App state={initialState}/>,document.getElementById('root'));
+ReactDOM.render(<App />,document.getElementById('root'));
 
 
