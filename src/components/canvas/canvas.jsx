@@ -51,13 +51,27 @@ drawCell = (e) => {
   const {primaryColor, penSize} = this.props;
   this.ctx.beginPath();
   this.ctx.fillStyle = primaryColor;
-  this.ctx.fillRect(this.cellX * this.cellWidth, this.cellY * this.cellHeight, this.cellWidth, this.cellHeight)
+  switch(this.props.penSize) {
+    case 1 :
+      this.ctx.fillRect(this.cellX * this.cellWidth, this.cellY * this.cellHeight, this.cellWidth, this.cellHeight);
+      break;
+    case 2 :
+      this.ctx.fillRect((this.cellX - 1) * this.cellWidth, (this.cellY - 1)* this.cellHeight, this.cellWidth * 2, this.cellHeight * 2);
+      break;
+    case 3:
+      this.ctx.fillRect((this.cellX - 1) * this.cellWidth, (this.cellY - 1) * this.cellHeight, this.cellWidth * 3, this.cellHeight * 3);
+      break;
+    case 4:
+      this.ctx.fillRect((this.cellX - 2) * this.cellWidth, (this.cellY - 2) * this.cellHeight, this.cellWidth * 4, this.cellHeight * 4);
+      break;
+  }
 }
+
 onMouseDown = () => {
-  console.log(1)
   this.drawCell()
   this.canvas.addEventListener('mousemove', this.drawCell);
 }
+
 onMouseUp = () => {
   this.canvas.removeEventListener('mousemove', this.drawCell);
 }
