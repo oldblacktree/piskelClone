@@ -1,14 +1,14 @@
 import React from 'react';
 import './pen-size.css';
 
-export default class PenSize extends React.Component {
+export default class PenSize extends React.PureComponent {
   constructor(props) {
     super(props);
     this.penSizeNumbers = [1,2,3,4];
   }
 
   handlePensizeItemClik = (item)=> () => {
-    this.props.updateStatePenSize(item);
+    this.props.onPenSizeChange(item);
   }
 
   createPenSizeItems = () => {
@@ -29,6 +29,7 @@ export default class PenSize extends React.Component {
   })}
 
   render() {
+    console.log('penSize')
     return (
       <ul className="pen-size">
         {this.createPenSizeItems()}

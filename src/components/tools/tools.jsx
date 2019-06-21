@@ -1,27 +1,44 @@
 import React from 'react';
 import './tools.css';
 
-
-export default class Tools extends React.Component {
+class Tool extends React.PureComponent {
   render() {
+    const { toolName, isActive, onClick} = this.props;
+    const activeClass = 'tools-item--active';
+    const itemClass = `tools-item--${toolName}`;
+
     return (
-    <ul className="tools">
-        <li className="tools-item tools-item--pen tools-item--active "></li>
-        <li className="tools-item tools-item--mirror"></li>
-        <li className="tools-item tools-item--paint-bucket"></li>
-        <li className="tools-item tools-item--paint-bucket-all"></li>
-        <li className="tools-item tools-item--eraser"></li>
-        <li className="tools-item tools-item--stroke"></li>
-        <li className="tools-item tools-item--rectangle"></li>
-        <li className="tools-item tools-item--circle"></li>
-        <li className="tools-item tools-item--move"></li>
-        <li className="tools-item tools-item--shape-selection"></li>
-        <li className="tools-item tools-item--rectangle-selection"></li>
-        <li className="tools-item tools-item--lasso-selection"></li>
-        <li className="tools-item tools-item--lighten"></li>
-        <li className="tools-item tools-item--dithering"></li>
-        <li className="tools-item tools-item--color-picker"></li>
-    </ul>
+      <li
+        className={`tools-item ${itemClass} ${isActive ? activeClass: ''}`}
+        onClick={()=>onClick(toolName)}
+      />
+    )
+  }
+}
+
+
+export default class Tools extends React.PureComponent {
+  handleToolClick = (toolName) => () => {
+    this.props.onToolClick(toolName);
+  }
+
+  render() {
+    const tools = this.props.toolsList.map((toolName) => {
+        const isActive = toolName === this.props.activeToolName ? true : false;
+        return (
+          <Tool
+            key={toolName}
+            toolName={toolName}
+            onClick={this.props.onToolClick}
+            isActive={isActive}
+          />
+        )
+      })
+
+    return (
+      <ul className="tools">
+          {tools}
+      </ul>
     );
   }
 }

@@ -5,24 +5,38 @@ import Header from './header/header.jsx';
 import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
+import Canvas from './canvas/canvas.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.toolsList = [
+      'pen', 'mirror',
+      'paint-bucket', 'paint-bucket-all',
+      'eraser', 'stroke',
+      'rectangle', 'circle',
+      'move', 'shape-selection',
+      'rectangle-selection', 'lasso-selection',
+      'lighten', 'dithering',
+      'color-picker'
+    ]
+
     this.state = {
       penSize: 4,
       primaryColor: "#000000",
       secondaryColor: "#FFFFFF",
+      canvasWidth: 600,
+      canvasHeight: 600,
+      activeToolName: this.toolsList[8],
     }
   }
 
-
-  updateStateProperty = (property) => {
-    return (value) => {
-      this.setState({[property]: value});
-    };
-  }
+  updateStateProperty = (property) => (value) => {this.setState({ [property]: value })};
+  handlePenSizeClick = this.updateStateProperty('penSize');
+  handleToolClick = this.updateStateProperty('activeToolName');
+  handlePrimaryColorChange = this.updateStateProperty('primaryColor');
+  handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
 
   handleSwap = () => {
     const { primaryColor, secondaryColor} = this.state;
@@ -34,8 +48,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {primaryColor, secondaryColor, penSize} = this.state;
-
+    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, activeToolName} = this.state;
     return (
       <>
         <Header />
@@ -43,19 +56,28 @@ class App extends React.Component {
           <section className="tools-column">
             <PenSize
               penSize={penSize}
-              updateStatePenSize={this.updateStateProperty('penSize')}
+              onPenSizeChange={this.handlePenSizeClick}
             />
-            <Tools />
+            <Tools
+              toolsList={this.toolsList}
+              activeToolName={activeToolName}
+              onToolClick={this.handleToolClick}
+            />
             <Palette
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
-              onPrimaryColorChange={this.updateStateProperty('primaryColor')}
-              onSecondaryColorChange={this.updateStateProperty('secondaryColor')}
+              onPrimaryColorChange={this.handlePrimaryColorChange}
+              onSecondaryColorChange={this.handleSecondaryColorChange}
               onSwapColors={this.handleSwap}
               />
           </section>
           <section className="frames-column"></section>
-          <section className="main-column"></section>
+          <section className="main-column">
+            <Canvas
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+          </section>
           <section className="settings-column"></section>
           <section className="menu-column"></section>
         </main>
