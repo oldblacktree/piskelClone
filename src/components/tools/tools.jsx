@@ -18,8 +18,8 @@ class Tool extends React.PureComponent {
 
 
 export default class Tools extends React.PureComponent {
-  handleToolClick = (toolName) => () => {
-    this.props.onToolClick(toolName);
+  handleToolClick = (toolName) => {
+    return this.props.onToolClick(toolName);
   }
 
   render() {
@@ -29,7 +29,7 @@ export default class Tools extends React.PureComponent {
           <Tool
             key={toolName}
             toolName={toolName}
-            onClick={this.props.onToolClick}
+            onClick={this.handleToolClick}
             isActive={isActive}
           />
         )

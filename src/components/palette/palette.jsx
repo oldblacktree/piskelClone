@@ -17,7 +17,7 @@ export default class Palette extends React.PureComponent {
 
   render() {
     const { primaryColor, secondaryColor, onSwapColors} = this.props;
-    console.log('palette')
+
     return (
       <div className="palette">
         <input className="palette__primary" id="palette__primary" type="color" onChange={this.handlePrimaryColorChange}/>

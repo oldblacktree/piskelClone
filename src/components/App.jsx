@@ -26,9 +26,11 @@ class App extends React.Component {
       penSize: 4,
       primaryColor: "#000000",
       secondaryColor: "#FFFFFF",
-      canvasWidth: 600,
-      canvasHeight: 600,
-      activeToolName: this.toolsList[8],
+      canvasWidth: 640,
+      canvasHeight: 640,
+      canvasCellCount: 32,
+      activeToolName: this.toolsList[0],
+      // activeToolName: '',
     }
   }
 
@@ -48,7 +50,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, activeToolName} = this.state;
+    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName} = this.state;
     return (
       <>
         <Header />
@@ -76,6 +78,11 @@ class App extends React.Component {
             <Canvas
               width={canvasWidth}
               height={canvasHeight}
+              activeToolName={activeToolName}
+              penSize={penSize}
+              cellCount={canvasCellCount}
+              primaryColor={primaryColor}
+              onPickColor={this.handlePrimaryColorChange}
             />
           </section>
           <section className="settings-column"></section>
