@@ -1,7 +1,7 @@
-.main-canvas {
-  width: 800px;
-  height: 800px;
-  border: 1px solid greenyellow;
-  background: url('./assets/img/480px-Pattern_Grid_32x32.png') no-repeat;
-  background-size: 100%;
+.canvas {
+  /* width: 800px;
+  height: 800px; */
+  background-color: #ccc;
+  /* background: url('./assets/img/480px-Pattern_Grid_32x32.png') no-repeat;
+  background-size: 100%; */
 }

@@ -29,8 +29,8 @@ class App extends React.Component {
       canvasWidth: 640,
       canvasHeight: 640,
       canvasCellCount: 32,
-      activeToolName: this.toolsList[0],
-      // activeToolName: '',
+      // activeToolName: this.toolsList[0],
+      activeToolName: '',
     }
   }
 
