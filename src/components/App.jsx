@@ -23,7 +23,7 @@ class App extends React.Component {
     ]
 
     this.state = {
-      penSize: 4,
+      penSize: 1,
       primaryColor: "#000000",
       secondaryColor: "#FFFFFF",
       canvasWidth: 640,
