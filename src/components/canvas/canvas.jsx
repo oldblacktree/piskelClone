@@ -205,8 +205,33 @@ resetMirror = () => {
   this.canvas.removeEventListener('mousedown', this.onMouseDownMirror)
   this.canvas.removeEventListener('mouseup', this.onMouseUpMirror)
 }
-// ------------------------------------------------
 
+// -------------------------paint-bucket-all--------------------------------
+drawPaintBuchetAll = (e) => {
+  const imageData = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+  const rgbaColorPick = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, 1)`;
+
+  for (let i = 0; i <= this.props.cellCount - 1; i++) {
+    for (let j = 0; j <= this.props.cellCount - 1; j++){
+      const imageData = this.ctx.getImageData(i * this.cellWidth, j * this.cellHeight, 1, 1).data;
+      const rgbaColor = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, 1)`;
+      if (rgbaColorPick === rgbaColor) {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = this.props.primaryColor;
+        this.ctx.fillRect(i * this.cellWidth, j * this.cellHeight, this.cellWidth, this.cellHeight);
+      }
+      }
+    }
+  }
+
+setPaintBucketAll = () => {
+  this.canvas.addEventListener('click', this.drawPaintBuchetAll)
+}
+resetPaintBucketAll = () => {
+  this.canvas.removeEventListener('click', this.drawPaintBuchetAll)
+}
+
+// ------------------------------------------------
 
 
 
@@ -239,8 +264,8 @@ toolsList = {
     reset: () => { console.log('reset paint-bucket') }
   },
   'paint-bucket-all': {
-    set: () => { console.log('set paint-bucket-all') },
-    reset: () => { console.log('reset paint-bucket-all') }
+    set: this.setPaintBucketAll,
+    reset: this.setPaintBucketAll
   },
   'eraser': {
     set: this.setEraser,
