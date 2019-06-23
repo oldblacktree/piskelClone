@@ -24,8 +24,8 @@ class App extends React.Component {
 
     this.state = {
       penSize: 1,
-      primaryColor: "#000000",
-      secondaryColor: "#FFFFFF",
+      primaryColor: "rgba(0, 0, 0, 1)",
+      secondaryColor: "rgba(255, 255, 255, 1)",
       canvasWidth: 640,
       canvasHeight: 640,
       canvasCellCount: 32,
@@ -82,6 +82,7 @@ class App extends React.Component {
               penSize={penSize}
               cellCount={canvasCellCount}
               primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
               onPickColor={this.handlePrimaryColorChange}
             />
           </section>

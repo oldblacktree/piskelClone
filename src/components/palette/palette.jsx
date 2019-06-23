@@ -1,19 +1,17 @@
 import React from 'react';
 import './palette.css';
-
-
-
+import { hexToRgbA } from '../../helpers/helpers'
 export default class Palette extends React.PureComponent {
 
-    handlePrimaryColorChange = (e) => {
-      const color = e.target.value;
-      this.props.onPrimaryColorChange(color);
-    }
+  handlePrimaryColorChange = (e) => {
+    const color = e.target.value;
+    this.props.onPrimaryColorChange(hexToRgbA(color));
+  }
 
-    handleSecondaryColorChange = (e) => {
-      const color = e.target.value;
-      this.props.onSecondaryColorChange(color);
-    }
+  handleSecondaryColorChange = (e) => {
+    const color = e.target.value;
+    this.props.onSecondaryColorChange(hexToRgbA(color));
+  }
 
   render() {
     const { primaryColor, secondaryColor, onSwapColors} = this.props;
