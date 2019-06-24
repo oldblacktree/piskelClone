@@ -6,6 +6,8 @@ import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
 import Canvas from './canvas/canvas.jsx';
+import Frames from './frames/frames.jsx';
+import AnimationPlayer from './animation-player/animation-player.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +33,8 @@ class App extends React.Component {
       canvasCellCount: 32,
       // activeToolName: this.toolsList[0],
       activeToolName: '',
+      framesList: [],
+      frameActive: 0,
     }
   }
 
@@ -39,6 +43,16 @@ class App extends React.Component {
   handleToolClick = this.updateStateProperty('activeToolName');
   handlePrimaryColorChange = this.updateStateProperty('primaryColor');
   handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
+  handleFramesListChange = this.updateStateProperty('framesList');
+  handleFrameActiveChange = this.updateStateProperty('frameActive');
+
+  handleImageDataChange = (imageData) => {
+    const {framesList, frameActive} = this.state;
+    const copyFramesList = framesList.slice();
+    copyFramesList[frameActive].imageData = imageData;
+    this.setState({'framesList':  copyFramesList})
+  }
+
 
   handleSwap = () => {
     const { primaryColor, secondaryColor} = this.state;
@@ -50,7 +64,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName} = this.state;
+    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName, framesList, frameActive} = this.state;
     return (
       <>
         <Header />
@@ -73,7 +87,16 @@ class App extends React.Component {
               onSwapColors={this.handleSwap}
               />
           </section>
-          <section className="frames-column"></section>
+          <section className="frames-column">
+            <Frames
+              width={canvasWidth}
+              height={canvasHeight}
+              framesList={framesList}
+              handleFramesChange={this.handleFramesListChange}
+              frameActive={frameActive}
+              handleFrameActiveChange={this.handleFrameActiveChange}
+            />
+          </section>
           <section className="main-column">
             <Canvas
               width={canvasWidth}
@@ -84,9 +107,17 @@ class App extends React.Component {
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
               onPickColor={this.handlePrimaryColorChange}
+              handleImageDataChange={this.handleImageDataChange}
+              framesList={framesList}
+              frameActive={frameActive}
             />
           </section>
-          <section className="settings-column"></section>
+          <section className="settings-column">
+            <AnimationPlayer
+              width={canvasWidth}
+              height={canvasHeight}
+              framesList={framesList}/>
+          </section>
           <section className="menu-column"></section>
         </main>
       </>

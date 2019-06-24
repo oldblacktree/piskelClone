@@ -24,7 +24,7 @@ export default class Tools extends React.PureComponent {
 
   render() {
     const tools = this.props.toolsList.map((toolName) => {
-        const isActive = toolName === this.props.activeToolName ? true : false;
+      const isActive = toolName === this.props.activeToolName ? true : false;
         return (
           <Tool
             key={toolName}

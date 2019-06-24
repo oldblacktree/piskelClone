@@ -35,11 +35,12 @@
 .fps {
   height: 26px;
   background-color: var(--color-gray);
+  padding: 0 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .fps__display {
-  padding: 0 10px;
+  padding: 0 7px;
 }

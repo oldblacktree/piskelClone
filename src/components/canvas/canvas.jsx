@@ -4,33 +4,22 @@ import { rgbaArr } from '../../helpers/helpers'
 
 
 export default class Canvas extends React.PureComponent {
-  // constructor(props) {
-  //   super(props);
-  // }
+
 cellWidth = this.props.width / this.props.cellCount;
 cellHeight = this.props.height / this.props.cellCount;
 prevToolName = this.props.activeToolName;
 canvasBackgroundColor = 'rgba(231, 231, 231, 1)'
 
-addSomeFigureOnCanvas = () => {
-this.ctx.fillStyle = "blue"
-this.ctx.fillRect(0, 0, 100, 100)
-this.ctx.beginPath()
-this.ctx.fillStyle = "green";
-this.ctx.fillRect(100, 100, 100, 100)
-this.ctx.beginPath();
-this.ctx.fillStyle = "gold";
-this.ctx.fillRect(200, 200, 100, 100)
-this.ctx.beginPath();
-this.ctx.fillStyle = "yellow";
-this.ctx.fillRect(300, 300, 100, 100)
-}
-
 handleCursorPosition = (e) => {
   const x = event.offsetX;
   const y = event.offsetY;
   this.cellX = Math.floor(x / this.cellWidth);
-  this  .cellY = Math.floor(y / this.cellHeight);
+  this.cellY = Math.floor(y / this.cellHeight);
+}
+
+onMouseUpCanvas = () => {
+  const imageData = this.ctx.getImageData(0, 0, this.props.width, this.props.height);
+  this.props.handleImageDataChange(imageData);
 }
 //------------color-picker----------------
 getColorFromCanvas = (e) => {
@@ -322,9 +311,6 @@ resetDithering = () => {
 }
 // ---------------------------------------------------------
 
-
-
-
 paintCanvasToOneColor = (color) => {
   this.ctx.beginPath();
   this.ctx.fillStyle = color;
@@ -334,7 +320,7 @@ paintCanvasToOneColor = (color) => {
 getContext = (canvas) => {
   this.canvas = canvas;
   this.ctx = canvas.getContext('2d');
-  this.paintCanvasToOneColor(this.canvasBackgroundColor)
+  this.paintCanvasToOneColor(this.canvasBackgroundColor);
 }
 
 toolsList = {
@@ -419,12 +405,16 @@ componentDidUpdate() {
   if (this.props.activeToolName !== this.prevToolName) {
 
     if (this.prevToolName !== ''){
-    this.toolsList[this.prevToolName].reset()
+      this.toolsList[this.prevToolName].reset()
     }
 
     this.prevToolName = this.props.activeToolName
     this.toolsList[this.props.activeToolName].set()
   }
+
+  // когда в массиве dataImage уже появилась
+
+    this.ctx.putImageData(this.props.framesList[this.props.frameActive].imageData, 0, 0)
 
 }
 
@@ -438,10 +428,10 @@ render() {
       height={height + 'px'}
       ref={this.getContext}
       onMouseMove={this.handleCursorPosition}
+      onMouseUp={this.onMouseUpCanvas}
       >
         This browser don't support canvas
     </canvas>
-    <p onClick={this.addSomeFigureOnCanvas} style={{color: 'red'}}>Add</p>
     </>
   )
 }
