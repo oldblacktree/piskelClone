@@ -19,7 +19,7 @@ class Frame extends React.Component {
   onDeleteButtonClick = () => {
     const newFrames = [...this.props.framesList];
     newFrames.splice(this.props.dataItem, 1);
-    this.props.handleFramesChange(newFrames)
+    // this.props.handleFramesChange(newFrames)
     console.log(newFrames)
   }
 
