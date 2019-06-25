@@ -9,12 +9,11 @@ export default class AnimationPlayer extends React.PureComponent{
   }
   idInterval = '';
 
-
-// setImageData = (fromContext, toContext) =>{
-//   let imageData = fromContext.getImageData(0, 0, canvWidth, canvHeight);
-//   toContext.putImageData(imageData, 0, 0);
-// }
   startAnimation =() => {
+    if (this.props.framesList.length === 0) {
+      console.log('framesList === 0')
+      return
+    }
     let i = 0;
     this.idInterval = setInterval(() => {
       let imageDataFrame = this.props.framesList[i % this.props.framesList.length].imageData
@@ -23,12 +22,12 @@ export default class AnimationPlayer extends React.PureComponent{
   }, 1000 / this.state.fps);
 }
 
-
   handleChange = (e) => {
     this.setState({fps: e.target.value})
   }
 
-  getContext = (canvas) => {
+  getCanvasContext = (canvas) => {
+    console.log('canvas AnimationPlalyer',canvas)
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.beginPath();
@@ -48,7 +47,6 @@ export default class AnimationPlayer extends React.PureComponent{
   }
 
   render() {
-
     const { props: { width, height }, state: { fps }, handleChange} = this;
     return (
       <>
@@ -56,7 +54,7 @@ export default class AnimationPlayer extends React.PureComponent{
           <canvas className="animation-player__canvas"
             width={width}
             height={height}
-            ref={this.getContext}>
+            ref={this.getCanvasContext}>
           </canvas>
           <div className="animation-player__button animation-player__button--popup" onClick={this.onFullScreenButtonClick}></div>
         </div>

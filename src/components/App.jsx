@@ -34,7 +34,6 @@ class App extends React.Component {
       // activeToolName: this.toolsList[0],
       activeToolName: '',
       framesList: [],
-      frameActive: 0,
     }
   }
 
@@ -44,14 +43,15 @@ class App extends React.Component {
   handlePrimaryColorChange = this.updateStateProperty('primaryColor');
   handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
   handleFramesListChange = this.updateStateProperty('framesList');
-  handleFrameActiveChange = this.updateStateProperty('frameActive');
+  // handChange = this.updateStateProperty');
+  handleInitialImageDataChange = this.updateStateProperty('initialImageData');
 
-  handleImageDataChange = (imageData) => {
-    const {framesList, frameActive} = this.state;
-    const copyFramesList = framesList.slice();
-    copyFramesList[frameActive].imageData = imageData;
-    this.setState({'framesList':  copyFramesList})
-  }
+  // handleImageDataChange = (imageData) => {
+  //   const {framesList} = this.state;
+  //   const copyFramesList = framesList.slice();
+  //   copyFramesLis].imageData = imageData;
+  //   this.setState({'framesList':  copyFramesList})
+  // }
 
 
   handleSwap = () => {
@@ -64,7 +64,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName, framesList, frameActive} = this.state;
+    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName, framesList, handleFramesListChange} = this.state;
     return (
       <>
         <Header />
@@ -92,9 +92,10 @@ class App extends React.Component {
               width={canvasWidth}
               height={canvasHeight}
               framesList={framesList}
-              handleFramesChange={this.handleFramesListChange}
-              frameActive={frameActive}
-              handleFrameActiveChange={this.handleFrameActiveChange}
+              handleFramesListChange={this.handleFramesListChange}
+              // frameActive={frameActive}
+              // handleFrameActiveChange={this.handleFrameActiveChange}
+
             />
           </section>
           <section className="main-column">
@@ -107,9 +108,10 @@ class App extends React.Component {
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
               onPickColor={this.handlePrimaryColorChange}
-              handleImageDataChange={this.handleImageDataChange}
-              framesList={framesList}
-              frameActive={frameActive}
+              // handleImageDataChange={this.handleImageDataChange}
+              // framesList={framesList}
+              // frameActive={frameActive}
+              // handleInitialImageDataChange={handleInitialImageDataChange}
             />
           </section>
           <section className="settings-column">

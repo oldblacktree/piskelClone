@@ -1,7 +1,7 @@
 import React from 'react';
 import './canvas.css';
 import { rgbaArr } from '../../helpers/helpers'
-
+import { cloneDeep } from 'lodash';
 
 export default class Canvas extends React.PureComponent {
 
@@ -17,10 +17,7 @@ handleCursorPosition = (e) => {
   this.cellY = Math.floor(y / this.cellHeight);
 }
 
-onMouseUpCanvas = () => {
-  const imageData = this.ctx.getImageData(0, 0, this.props.width, this.props.height);
-  this.props.handleImageDataChange(imageData);
-}
+
 //------------color-picker----------------
 getColorFromCanvas = (e) => {
   const x = event.offsetX;
@@ -196,25 +193,6 @@ resetMirror = () => {
   this.canvas.removeEventListener('mouseup', this.onMouseUpMirror)
 }
 
-// -------------------------paint-bucket-all--------------------------------
-// drawPaintBuchetAll = (e) => {
-//   const imageData = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
-//   const rgbaColorPick = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, 1)`;
-//   this.ctx.fillStyle = this.props.primaryColor;
-//   const { cellWidth, cellHeight, props: { cellCount}} = this
-
-//   for (let i = 0; i <= cellCount - 1; i++) {
-//     for (let j = 0; j <= cellCount - 1; j++){
-//       const imageData = this.ctx.getImageData(i * cellWidth, j * cellHeight, 1, 1).data;
-//       const rgbaColor = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, 1)`;
-//       if (rgbaColorPick === rgbaColor) {
-//         // this.ctx.beginPath();
-
-//         this.ctx.fillRect(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-//       }
-//       }
-//     }
-//   }
 drawPaintBuchetAll = (e) => {
   const [pickedRColor, pickedGColor, pickedBColor] = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
   const [primaryRColor, primaryGColor, primaryBColor] = rgbaArr(this.props.primaryColor);
@@ -311,18 +289,6 @@ resetDithering = () => {
 }
 // ---------------------------------------------------------
 
-paintCanvasToOneColor = (color) => {
-  this.ctx.beginPath();
-  this.ctx.fillStyle = color;
-  this.ctx.fillRect(0, 0, this.props.width, this.props.height)
-}
-
-getContext = (canvas) => {
-  this.canvas = canvas;
-  this.ctx = canvas.getContext('2d');
-  this.paintCanvasToOneColor(this.canvasBackgroundColor);
-}
-
 toolsList = {
   'pen': {
     set: this.setPen,
@@ -387,19 +353,23 @@ toolsList = {
 
 }
 
+  onMouseUpCanvas = () => {
+    // const imageData = this.ctx.getImageData(0, 0, this.props.width, this.props.height);
+  }
 
+paintCanvasToOneColor = (color) => {
+  this.ctx.beginPath();
+  this.ctx.fillStyle = color;
+  this.ctx.fillRect(0, 0, this.props.width, this.props.height)
+}
 
+getMainCanvasContext = (canvas) => {
+  console.log('getMainCanvasContext', canvas)
+  this.canvas = canvas;
+  this.ctx = canvas.getContext('2d');
+  this.paintCanvasToOneColor(this.canvasBackgroundColor);
+}
 
-//     this.toolsList = [
-//   'pen', 'mirror',
-//   'paint-bucket', 'paint-bucket-all',
-//   'eraser', 'stroke',
-//   'rectangle', 'circle',
-//   'move', 'shape-selection',
-//   'rectangle-selection', 'lasso-selection',
-//   'lighten', 'dithering',
-//   'color-picker'
-// ]
 
 componentDidUpdate() {
   if (this.props.activeToolName !== this.prevToolName) {
@@ -412,13 +382,10 @@ componentDidUpdate() {
     this.toolsList[this.props.activeToolName].set()
   }
 
-  // когда в массиве dataImage уже появилась
-
-    this.ctx.putImageData(this.props.framesList[this.props.frameActive].imageData, 0, 0)
-
 }
 
 render() {
+  console.log('RENDER MAIN-CANVAS')
   const {width, height} = this.props
   return (
     <>
@@ -426,7 +393,7 @@ render() {
       className="canvas"
       width={width + 'px'}
       height={height + 'px'}
-      ref={this.getContext}
+      ref={this.getMainCanvasContext}
       onMouseMove={this.handleCursorPosition}
       onMouseUp={this.onMouseUpCanvas}
       >
