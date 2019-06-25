@@ -5,7 +5,7 @@ import React from 'react';
 export default class AnimationPlayer extends React.PureComponent{
   constructor(props){
     super(props);
-    this.state = {fps: 1}
+    this.state = {fps: 0}
   }
   idInterval = '';
 

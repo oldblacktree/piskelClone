@@ -3,28 +3,55 @@ import React from 'react';
 import { cloneDeep } from 'lodash';
 
 
-class Frame extends React.Component {
+class Frame extends React.PureComponent {
+  // static getDerivedStateFromProps(props) {
+  //   return { imageData: props.imageData}
+  // }
+
+
   setImageData = (canvas) => {
-    const ctx = canvas.getContext("2d");
-    ctx.putImageData(this.props.imageData,0,0)
+    console.log('setImageData - id', this.props.frameId)
+
+    const { imageData } = this.props
+    if (canvas) {
+      this.canvas = canvas
+    }
+
+
+    if (imageData.data) {
+      this.canvas.getContext("2d").putImageData(this.props.imageData, 0, 0)
+    }
   }
 
   handleDeleteButtonClick = () => {
-    const copyFramesList = this.props.framesList.filter((item) => {
-      // return item.index !== this.props.index
-      return true
-    })
 
-    this.props.handleFramesListChange(copyFramesList)
-    // this.props.handleFramesListChange(this.props.framesList)
-    console.log('copyFramesList', copyFramesList)
-    console.log('this.props.framesList', this.props.framesList)
+    this.props.onDeleteFrame(this.props.frameId)
   }
 
+  componentDidUpdate(prevProps) {
+    const { imageData } = this.props
+
+    if (imageData.data) {
+      this.canvas.getContext("2d").putImageData(this.props.imageData, 0, 0)
+    }
+  }
+
+  handleChangeActiveFrameId =()=>{
+    const { frameId, onChangeActiveFrameId } = this.props
+    onChangeActiveFrameId(frameId)
+  }
+
+
+
   render() {
-    const { props: { width, height } } = this
+
+    const { props: { width, height, isActive, frameId, onChangeActiveFrameId} } = this
+    const activeClass = 'frames__item--active';
+    console.log('RENDER Frame')
+
+    // <li className={`frames__item ${isActive ? activeClass : ''}`} >
     return (
-      <li className={`frames__item`} >
+      <li className={`frames__item ${isActive ? activeClass : ''}`} >
         <div className="frames__button frames__button--move"></div>
         <div className="frames__button frames__button--delete" onClick={this.handleDeleteButtonClick}></div>
         <div className="frames__button frames__button--duplicate"></div>
@@ -33,6 +60,7 @@ class Frame extends React.Component {
           width={width + 'px'}
           height={height + 'px'}
           ref={this.setImageData}
+          onClick={this.handleChangeActiveFrameId}
         >
           This browser don't support canvas
         </canvas>
@@ -50,6 +78,7 @@ export default class Frames extends React.Component {
   index = 0;
 
   createNewImageData = () => {
+
     const canvasFrame = document.createElement('canvas');
     const ctx = canvasFrame.getContext("2d");
     canvasFrame.setAttribute("width", this.props.width);
@@ -63,26 +92,31 @@ export default class Frames extends React.Component {
 
 
   handleAddFrame = () => {
-    const frame = { imageData: this.createNewImageData(),
-                    index : this.index}
-    const newFramesList = this.props.framesList.concat(frame);
-    this.props.handleFramesListChange(newFramesList);
-    this.index++;
+    this.props.addFrame()
   }
 
+
+
   render(){
-    console.log('render FRAMES')
-    const { props: { framesList, width, height, handleFramesListChange}} = this;
-    const frames = framesList.map((item,i) => {
+
+    const { props: { frameList, activeFrameId, width, height, handleFramesListChange, onChangeActiveFrameId, onDeleteFrame}} = this;
+
+    const frames = frameList.map(({imageData, id}) => {
+
+
       return (
         <Frame
-          key={i}
+          key={id}
           width={width}
           height={height}
-          imageData={item.imageData}
-          index={item.index}
-          framesList={framesList}
+          imageData={imageData}
+          frameId={id}
+
           handleFramesListChange={handleFramesListChange}
+          isActive={id === activeFrameId}
+          onChangeActiveFrameId={onChangeActiveFrameId}
+          onDeleteFrame={onDeleteFrame}
+
         />
       )
     })

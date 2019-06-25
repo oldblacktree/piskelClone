@@ -5,13 +5,20 @@ import Header from './header/header.jsx';
 import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
-import Canvas from './canvas/canvas.jsx';
+// import Canvas from './canvas/canvas.jsx';
+import Canvas from './canvas/canvas2.jsx'
 import Frames from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.getId = () => {
+      return this.index++;
+    }
+
+    this.index = 0;
 
     this.toolsList = [
       'pen', 'mirror',
@@ -24,6 +31,30 @@ class App extends React.Component {
       'color-picker'
     ]
 
+    this.createNewImageData = () => {
+      const canvasFrame = document.createElement('canvas');
+      const ctx = canvasFrame.getContext("2d");
+      canvasFrame.setAttribute("width", this.props.width);
+      canvasFrame.setAttribute("height", this.props.height);
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(231, 231, 231, 1)';
+      ctx.fillRect(0, 0, this.props.width, this.props.height);
+
+      return ctx.getImageData(0, 0, 640, 640)
+    }
+
+    this.getNewFrame = (imageData) => {
+      return {
+        imageData: imageData || this.createNewImageData(),
+        id: this.getId()
+      }
+    }
+
+
+
+    const firstFrame = this.getNewFrame()
+
+
     this.state = {
       penSize: 1,
       primaryColor: "rgba(0, 0, 0, 1)",
@@ -33,8 +64,63 @@ class App extends React.Component {
       canvasCellCount: 32,
       // activeToolName: this.toolsList[0],
       activeToolName: '',
-      framesList: [],
+      // frameList: [
+      //   {
+      //     imageData: {}
+      //     id: int,
+      //   },
+      //   {}
+      // ],
+      frameList: [
+        firstFrame,
+      ],
+      activeFrameId: firstFrame.id
     }
+  }
+
+  handleDeleteFrame = (frameId) => {
+    const { frameList, activeFrameId} = this.state
+    let newActiveFrameId;
+    let removedFrameIndex;
+
+    if (frameList.length > 1) {
+      const newFrameList = frameList.filter((frame, frameIndex)=>{
+        if (frame.id === frameId) {
+          removedFrameIndex = frameIndex
+        }
+        return frame.id !== frameId
+      })
+
+      if ( frameId === activeFrameId) {
+        newActiveFrameId = removedFrameIndex === 0
+          ? newFrameList[removedFrameIndex].id
+          : newFrameList[removedFrameIndex - 1].id
+      } else {
+        newActiveFrameId = activeFrameId
+      }
+
+      this.setState({
+        frameList: newFrameList,
+        activeFrameId: newActiveFrameId
+      })
+    }
+
+  }
+
+  handleUpdateFrameList = (frameId) => (imageData)=> {
+    const { frameList } = this.state
+    const frame = frameList.find(({ id }) => id === frameId)
+    const updatedFrame = { ...frame, imageData}
+
+    frameList.forEach((frame) => {
+      if (frame.id === frameId) {
+        frame.imageData = imageData
+      }
+    })
+
+    this.setState({
+      frameList,
+    })
   }
 
   updateStateProperty = (property) => (value) => {this.setState({ [property]: value })};
@@ -45,6 +131,7 @@ class App extends React.Component {
   handleFramesListChange = this.updateStateProperty('framesList');
   // handChange = this.updateStateProperty');
   handleInitialImageDataChange = this.updateStateProperty('initialImageData');
+  changeActiveFrameId = this.updateStateProperty('activeFrameId');
 
   // handleImageDataChange = (imageData) => {
   //   const {framesList} = this.state;
@@ -63,8 +150,26 @@ class App extends React.Component {
     })
   }
 
+  handleAddFrame = () => {
+    const {frameList} = this.state
+    const newFrame = this.getNewFrame()
+    const newFrameList = [...frameList, newFrame]
+
+    this.setState({
+      frameList: newFrameList,
+      activeFrameId: newFrame.id
+    })
+
+
+  }
+
   render() {
-    const { primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount, activeToolName, framesList, handleFramesListChange} = this.state;
+    const {
+      primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount,
+      activeToolName, framesList, handleFramesListChange, frameList, activeFrameId
+    } = this.state;
+
+    const { imageData: frameImageData } = frameList.find(({ id }) => id === activeFrameId)
     return (
       <>
         <Header />
@@ -91,8 +196,12 @@ class App extends React.Component {
             <Frames
               width={canvasWidth}
               height={canvasHeight}
-              framesList={framesList}
+              frameList={frameList}
+              activeFrameId={activeFrameId}
               handleFramesListChange={this.handleFramesListChange}
+              addFrame={this.handleAddFrame}
+              onChangeActiveFrameId={this.changeActiveFrameId}
+              onDeleteFrame={this.handleDeleteFrame}
               // frameActive={frameActive}
               // handleFrameActiveChange={this.handleFrameActiveChange}
 
@@ -102,23 +211,17 @@ class App extends React.Component {
             <Canvas
               width={canvasWidth}
               height={canvasHeight}
-              activeToolName={activeToolName}
+              color={primaryColor}
               penSize={penSize}
-              cellCount={canvasCellCount}
-              primaryColor={primaryColor}
-              secondaryColor={secondaryColor}
-              onPickColor={this.handlePrimaryColorChange}
-              // handleImageDataChange={this.handleImageDataChange}
-              // framesList={framesList}
-              // frameActive={frameActive}
-              // handleInitialImageDataChange={handleInitialImageDataChange}
+              imageData={frameImageData}
+              updateFrameList={this.handleUpdateFrameList(activeFrameId)}
             />
           </section>
           <section className="settings-column">
             <AnimationPlayer
               width={canvasWidth}
               height={canvasHeight}
-              framesList={framesList}/>
+              framesList={frameList}/>
           </section>
           <section className="menu-column"></section>
         </main>
