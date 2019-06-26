@@ -8,19 +8,24 @@ class Frame extends React.PureComponent {
   //   return { imageData: props.imageData}
   // }
 
-
-  setImageData = (canvas) => {
-    console.log('setImageData - id', this.props.frameId)
-
-    const { imageData } = this.props
-    if (canvas) {
-      this.canvas = canvas
-    }
+  componentDidMount(){
+    this.canvasRef.getContext("2d").putImageData(this.props.imageData, 0, 0)
+  }
 
 
-    if (imageData.data) {
-      this.canvas.getContext("2d").putImageData(this.props.imageData, 0, 0)
-    }
+  setCanvasRef = (ref) => {
+    console.log('setCanvasRef - id', this.props.frameId)
+
+    // const { imageData } = this.props
+    // if (canvas) {
+    this.canvasRef = ref
+
+    // }
+
+
+    // if (imageData.data) {
+
+    // }
   }
 
   handleDeleteButtonClick = () => {
@@ -31,9 +36,9 @@ class Frame extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { imageData } = this.props
 
-    if (imageData.data) {
-      this.canvas.getContext("2d").putImageData(this.props.imageData, 0, 0)
-    }
+    // if (imageData.data) {
+    this.canvasRef.getContext("2d").putImageData(this.props.imageData, 0, 0)
+    // }
   }
 
   handleChangeActiveFrameId =()=>{
@@ -59,7 +64,7 @@ class Frame extends React.PureComponent {
           className="frames__canvas"
           width={width + 'px'}
           height={height + 'px'}
-          ref={this.setImageData}
+          ref={this.setCanvasRef}
           onClick={this.handleChangeActiveFrameId}
         >
           This browser don't support canvas

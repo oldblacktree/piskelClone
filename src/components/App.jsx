@@ -5,8 +5,7 @@ import Header from './header/header.jsx';
 import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
-// import Canvas from './canvas/canvas.jsx';
-import Canvas from './canvas/canvas2.jsx'
+import Canvas from './canvas/canvas.jsx'
 import Frames from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
 
