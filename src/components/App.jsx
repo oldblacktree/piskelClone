@@ -8,16 +8,12 @@ import Palette from './palette/palette.jsx';
 import Canvas from './canvas/canvas.jsx'
 import Frames from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
+import {createNewImageData, getId} from '../helpers/helpers'
+import initialState from './InitialAppState'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.getId = () => {
-      return this.index++;
-    }
-
-    this.index = 0;
 
     this.toolsList = [
       'pen', 'mirror',
@@ -30,30 +26,22 @@ class App extends React.Component {
       'color-picker'
     ]
 
-    this.createNewImageData = () => {
-      const canvasFrame = document.createElement('canvas');
-      const ctx = canvasFrame.getContext("2d");
-      canvasFrame.setAttribute("width", this.props.width);
-      canvasFrame.setAttribute("height", this.props.height);
-      ctx.beginPath();
-      ctx.fillStyle = 'rgba(231, 231, 231, 1)';
-      ctx.fillRect(0, 0, this.props.width, this.props.height);
-
-      return ctx.getImageData(0, 0, 640, 640)
-    }
-
-    this.getNewFrame = (imageData) => {
+    this.getNewFrame = (...args) => {
+      'эта функция дожна называться createNewFrame и быть точно не тут и быть static'
+      /*
+      * create copy frame with imageDate
+      * OR create new frame with widht and height
+      */
+      const imageData = args.length === 1
+        ? args[0]
+        : createNewImageData(...args)
       return {
-        imageData: imageData || this.createNewImageData(),
-        id: this.getId()
+        imageData,
+        id: getId()
       }
     }
 
-
-
-    const firstFrame = this.getNewFrame()
-
-
+    const firstFrame = this.getNewFrame( initialState.canvasWidth, initialState.canvasHeight)
     this.state = {
       penSize: 1,
       primaryColor: "rgba(0, 0, 0, 1)",
@@ -158,8 +146,10 @@ class App extends React.Component {
       frameList: newFrameList,
       activeFrameId: newFrame.id
     })
+  }
 
-
+  componentDidMount() {
+    this.setState({})
   }
 
   render() {
