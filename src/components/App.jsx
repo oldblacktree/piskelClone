@@ -6,7 +6,7 @@ import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
 import Palette from './palette/palette.jsx';
 import Canvas from './canvas/canvas.jsx'
-import Frames from './frames/frames.jsx';
+import Frames, { getNewFrame } from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
 import {createNewImageData, getId} from '../helpers/helpers'
 import initialState from './InitialAppState'
@@ -26,22 +26,7 @@ class App extends React.Component {
       'color-picker'
     ]
 
-    this.getNewFrame = (...args) => {
-      'эта функция дожна называться createNewFrame и быть точно не тут и быть static'
-      /*
-      * create copy frame with imageDate
-      * OR create new frame with widht and height
-      */
-      const imageData = args.length === 1
-        ? args[0]
-        : createNewImageData(...args)
-      return {
-        imageData,
-        id: getId()
-      }
-    }
-
-    const firstFrame = this.getNewFrame( initialState.canvasWidth, initialState.canvasHeight)
+    const firstFrame = getNewFrame( initialState.canvasWidth, initialState.canvasHeight)
     this.state = {
       penSize: 1,
       primaryColor: "rgba(0, 0, 0, 1)",
@@ -56,7 +41,6 @@ class App extends React.Component {
       //     imageData: {}
       //     id: int,
       //   },
-      //   {}
       // ],
       frameList: [
         firstFrame,
@@ -65,43 +49,14 @@ class App extends React.Component {
     }
   }
 
-  handleDeleteFrame = (frameId) => {
-    const { frameList, activeFrameId} = this.state
-    let newActiveFrameId;
-    let removedFrameIndex;
-
-    if (frameList.length > 1) {
-      const newFrameList = frameList.filter((frame, frameIndex)=>{
-        if (frame.id === frameId) {
-          removedFrameIndex = frameIndex
-        }
-        return frame.id !== frameId
-      })
-
-      if ( frameId === activeFrameId) {
-        newActiveFrameId = removedFrameIndex === 0
-          ? newFrameList[removedFrameIndex].id
-          : newFrameList[removedFrameIndex - 1].id
-      } else {
-        newActiveFrameId = activeFrameId
-      }
-
-      this.setState({
-        frameList: newFrameList,
-        activeFrameId: newActiveFrameId
-      })
-    }
-
-  }
-
-  handleUpdateFrameList = (frameId) => (imageData)=> {
-    const { frameList } = this.state
-    const frame = frameList.find(({ id }) => id === frameId)
-    const updatedFrame = { ...frame, imageData}
+  //
+  handleUpdateActiveFrameImageData = (newImageData) => {
+    const { frameList, activeFrameId } = this.state
+    const frame = frameList.find(({ id }) => id === activeFrameId)
 
     frameList.forEach((frame) => {
-      if (frame.id === frameId) {
-        frame.imageData = imageData
+      if (frame.id === activeFrameId) {
+        frame.imageData = newImageData
       }
     })
 
@@ -109,24 +64,6 @@ class App extends React.Component {
       frameList,
     })
   }
-
-  updateStateProperty = (property) => (value) => {this.setState({ [property]: value })};
-  handlePenSizeClick = this.updateStateProperty('penSize');
-  handleToolClick = this.updateStateProperty('activeToolName');
-  handlePrimaryColorChange = this.updateStateProperty('primaryColor');
-  handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
-  handleFramesListChange = this.updateStateProperty('framesList');
-  // handChange = this.updateStateProperty');
-  handleInitialImageDataChange = this.updateStateProperty('initialImageData');
-  changeActiveFrameId = this.updateStateProperty('activeFrameId');
-
-  // handleImageDataChange = (imageData) => {
-  //   const {framesList} = this.state;
-  //   const copyFramesList = framesList.slice();
-  //   copyFramesLis].imageData = imageData;
-  //   this.setState({'framesList':  copyFramesList})
-  // }
-
 
   handleSwap = () => {
     const { primaryColor, secondaryColor} = this.state;
@@ -137,27 +74,22 @@ class App extends React.Component {
     })
   }
 
-  handleAddFrame = () => {
-    const {frameList} = this.state
-    const newFrame = this.getNewFrame()
-    const newFrameList = [...frameList, newFrame]
-
-    this.setState({
-      frameList: newFrameList,
-      activeFrameId: newFrame.id
-    })
-  }
-
-  componentDidMount() {
-    this.setState({})
-  }
+  updateStateProperty = (property) => (value) => { this.setState({ [property]: value }) };
+  handlePenSizeClick = this.updateStateProperty('penSize');
+  handleToolClick = this.updateStateProperty('activeToolName');
+  handlePrimaryColorChange = this.updateStateProperty('primaryColor');
+  handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
+  handleFramesListChange = this.updateStateProperty('frameList');
+  handleInitialImageDataChange = this.updateStateProperty('initialImageData');
+  changeActiveFrameId = this.updateStateProperty('activeFrameId');
 
   render() {
     const {
       primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount,
-      activeToolName, framesList, handleFramesListChange, frameList, activeFrameId
+      activeToolName, frameList, activeFrameId
     } = this.state;
 
+    // Cavas takes imageData from Active frame and set it to self
     const { imageData: frameImageData } = frameList.find(({ id }) => id === activeFrameId)
     return (
       <>
@@ -188,22 +120,22 @@ class App extends React.Component {
               frameList={frameList}
               activeFrameId={activeFrameId}
               handleFramesListChange={this.handleFramesListChange}
-              addFrame={this.handleAddFrame}
               onChangeActiveFrameId={this.changeActiveFrameId}
-              onDeleteFrame={this.handleDeleteFrame}
-              // frameActive={frameActive}
-              // handleFrameActiveChange={this.handleFrameActiveChange}
-
             />
           </section>
           <section className="main-column">
             <Canvas
               width={canvasWidth}
               height={canvasHeight}
-              color={primaryColor}
+              primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
               penSize={penSize}
               imageData={frameImageData}
-              updateFrameList={this.handleUpdateFrameList(activeFrameId)}
+              cellCount={canvasCellCount}
+              activeToolName={activeToolName}
+              // activeFrameId={activeFrameId}
+              updateFrameList={this.handleUpdateActiveFrameImageData}
+              handlePrimaryColorChange={this.handlePrimaryColorChange}
             />
           </section>
           <section className="settings-column">

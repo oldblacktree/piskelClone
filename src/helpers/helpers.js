@@ -32,7 +32,7 @@ const hexToRgbA = (hex) => {
 
 const rgbaArr = (rgbaStr) => {
   // "rgba(255, 255, 255, 1)" => [255, 255, 255, 1]
-  rgbaStr.match(/([0-9]+\.?[0-9]*)/g).map(item => +item);
+  return rgbaStr.match(/([0-9]+\.?[0-9]*)/g).map(item => +item);
 };
 
 const createNewImageData = (width, height) => {

@@ -13,17 +13,17 @@ const PATHS = {
 
 module.exports = {
   externals: {
-    paths: PATHS,
+    paths: PATHS
   },
 
   entry: {
-    app: PATHS.src,
+    app: PATHS.src
     // app: `${PATHS.src}/index.js`,
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
     path: PATHS.dist,
-    publicPath: '/',
+    publicPath: '/'
   },
   // devtool: 'source-map',
   // // devServer: {
@@ -38,17 +38,17 @@ module.exports = {
         test: /\.html$/,
         exclude: /node_modules/,
         use: {
-          loader: 'html-loader',
-        },
+          loader: 'html-loader'
+        }
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: '/node_modules',
-        options: {
-          plugins: ['lodash'],
-          presets: [['env', { modules: false, targets: { node: 4 } }]],
-        },
+        exclude: '/node_modules'
+        // options: {
+        //   plugins: ['lodash'],
+        //   presets: [['env', { modules: false, targets: { node: 4 } }]],
+        // },
       },
       {
         test: /\.jsx$/,
@@ -56,16 +56,16 @@ module.exports = {
         exclude: '/node_modules',
         options: {
           plugins: ['lodash'],
-          presets: [['env', { modules: false, targets: { node: 4 } }]],
-        },
+          presets: [['@babel/preset-env', { modules: false, targets: { node: 4 } }]]
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
           // name: 'qwe/[name].[ext]',
-          name: `${PATHS.assets}img/[name].[ext]`,
-        },
+          name: `${PATHS.assets}img/[name].[ext]`
+        }
       },
       {
         test: /\.css$/,
@@ -75,34 +75,34 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-    ],
+              sourceMap: true
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/[name].css`,
+      filename: `${PATHS.assets}css/[name].css`
     }),
     new CopyWebpackPlugin([
       // { from: './src/**/*.png', to: `${PATHS.assets}img` },
       // { from: `${PATHS.src}/qqq`, to: `${PATHS.assets}img` },
       {
         from: `${PATHS.src}/components/header/assets/img`,
-        to: `${PATHS.assets}img`,
-      },
+        to: `${PATHS.assets}img`
+      }
       // { from: `${PATHS.src}/static`, to: '' },
     ]),
     new HtmlWebpackPlugin({
       hash: false,
       template: `${PATHS.src}/index.html`,
-      filename: './index.html',
+      filename: './index.html'
       // title: 'Piskel clone',
       // favicon: './src/favicon.ico',
       // meta: { viewport: 'width=device-width, initial-scale=1' },
-    }),
-  ],
+    })
+  ]
 };
