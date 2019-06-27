@@ -8,6 +8,7 @@ import Palette from './palette/palette.jsx';
 import Canvas from './canvas/canvas.jsx'
 import Frames, { getNewFrame } from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
+import PositionOnCanvas from './positionOnCanvas/positionOnCanvas.jsx'
 import {createNewImageData, getId} from '../helpers/helpers'
 import initialState from './InitialAppState'
 
@@ -45,7 +46,9 @@ class App extends React.Component {
       frameList: [
         firstFrame,
       ],
-      activeFrameId: firstFrame.id
+      activeFrameId: firstFrame.id,
+      // positionOnCanvas: [cellX, cellY]
+      positionOnCanvas: [initialState.canvasCellCount, initialState.canvasCellCount],
     }
   }
 
@@ -82,11 +85,12 @@ class App extends React.Component {
   handleFramesListChange = this.updateStateProperty('frameList');
   handleInitialImageDataChange = this.updateStateProperty('initialImageData');
   changeActiveFrameId = this.updateStateProperty('activeFrameId');
+  changePositionOnCanvas = this.updateStateProperty('positionOnCanvas');
 
   render() {
     const {
       primaryColor, secondaryColor, penSize, canvasWidth, canvasHeight, canvasCellCount,
-      activeToolName, frameList, activeFrameId
+      activeToolName, frameList, activeFrameId, positionOnCanvas
     } = this.state;
 
     // Cavas takes imageData from Active frame and set it to self
@@ -136,6 +140,7 @@ class App extends React.Component {
               // activeFrameId={activeFrameId}
               updateFrameList={this.handleUpdateActiveFrameImageData}
               handlePrimaryColorChange={this.handlePrimaryColorChange}
+              changePositionOnCanvas={this.changePositionOnCanvas}
             />
           </section>
           <section className="settings-column">
@@ -143,6 +148,9 @@ class App extends React.Component {
               width={canvasWidth}
               height={canvasHeight}
               framesList={frameList}/>
+            <PositionOnCanvas
+              positionOnCanvas={positionOnCanvas}
+            />
           </section>
           <section className="menu-column"></section>
         </main>

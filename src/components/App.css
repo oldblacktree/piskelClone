@@ -523,6 +523,8 @@ a {
 .settings-column {
   width: 220px;
   padding: 0 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-column {

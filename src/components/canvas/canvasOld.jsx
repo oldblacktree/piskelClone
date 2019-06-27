@@ -17,6 +17,9 @@ handleCursorPosition = (e) => {
   this.cellY = Math.floor(y / this.cellHeight);
 }
 
+handlePositionOnCanvas = () => {
+
+}
 
 //------------color-picker----------------
 getColorFromCanvas = (e) => {
@@ -353,10 +356,6 @@ toolsList = {
 
 }
 
-  onMouseUpCanvas = () => {
-    // const imageData = this.ctx.getImageData(0, 0, this.props.width, this.props.height);
-  }
-
 paintCanvasToOneColor = (color) => {
   this.ctx.beginPath();
   this.ctx.fillStyle = color;
@@ -396,6 +395,7 @@ render() {
       ref={this.getMainCanvasContext}
       onMouseMove={this.handleCursorPosition}
       onMouseUp={this.onMouseUpCanvas}
+      onMouseOut={this.handlePositionOnCanvas}
       >
         This browser don't support canvas
     </canvas>
