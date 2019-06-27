@@ -509,6 +509,7 @@ a {
   display: flex;
   flex-direction: column;
   padding: 0 7px;
+  overflow: auto;
 }
 
 .main-column {
@@ -525,9 +526,12 @@ a {
   padding: 0 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 100px;
 }
 
 .menu-column {
   display: flex;
   align-items: center;
 }
+

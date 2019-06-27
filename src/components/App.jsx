@@ -11,6 +11,7 @@ import AnimationPlayer from './animation-player/animation-player.jsx'
 import PositionOnCanvas from './positionOnCanvas/positionOnCanvas.jsx'
 import {createNewImageData, getId} from '../helpers/helpers'
 import initialState from './InitialAppState'
+import Menu from './menu/menu.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class App extends React.Component {
       secondaryColor: "rgba(255, 255, 255, 1)",
       canvasWidth: 640,
       canvasHeight: 640,
-      canvasCellCount: 32,
+      canvasCellCount: 64,
       // activeToolName: this.toolsList[0],
       activeToolName: '',
       // frameList: [
@@ -79,7 +80,7 @@ class App extends React.Component {
 
   updateStateProperty = (property) => (value) => { this.setState({ [property]: value }) };
   handlePenSizeClick = this.updateStateProperty('penSize');
-  handleToolClick = this.updateStateProperty('activeToolName');
+  handleToolChange = this.updateStateProperty('activeToolName');
   handlePrimaryColorChange = this.updateStateProperty('primaryColor');
   handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
   handleFramesListChange = this.updateStateProperty('frameList');
@@ -107,7 +108,7 @@ class App extends React.Component {
             <Tools
               toolsList={this.toolsList}
               activeToolName={activeToolName}
-              onToolClick={this.handleToolClick}
+              handleToolChange={this.handleToolChange}
             />
             <Palette
               primaryColor={primaryColor}
@@ -144,13 +145,20 @@ class App extends React.Component {
             />
           </section>
           <section className="settings-column">
-            <AnimationPlayer
+            <div>
+              <AnimationPlayer
               width={canvasWidth}
               height={canvasHeight}
               framesList={frameList}/>
+            </div>
             <PositionOnCanvas
               positionOnCanvas={positionOnCanvas}
             />
+          </section>
+          <section>
+            <ul className="menu">
+              <Menu />
+            </ul>
           </section>
           <section className="menu-column"></section>
         </main>

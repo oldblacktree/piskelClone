@@ -19,6 +19,24 @@ class Frame extends React.PureComponent {
     }
   }
 
+  handleDuplicateFrame = () => {
+    const { frameList, handleFramesListChange, onChangeActiveFrameId, frameId } = this.props
+    let duplicatedFrameIndex;
+
+    const { imageData: duplicateImageData } = frameList.find(({ id }, i) => {
+      if (id === frameId) {
+        duplicatedFrameIndex = i;
+        return true
+      }
+    });
+
+    const duplicateFrame = Frame.getNewFrame(duplicateImageData);
+    const newFrameList = [...frameList]
+    newFrameList.splice(duplicatedFrameIndex + 1, 0, duplicateFrame);
+    handleFramesListChange(newFrameList)
+    onChangeActiveFrameId(duplicateFrame.id)
+  }
+
   handleDeleteFrame = () => {
     const { frameList, activeFrameId, handleFramesListChange, onChangeActiveFrameId, frameId } = this.props
 
@@ -75,7 +93,7 @@ class Frame extends React.PureComponent {
       <li className={`frames__item ${isActive ? activeClass : ''}`} >
         <div className="frames__button frames__button--move"></div>
         <div className="frames__button frames__button--delete" onClick={this.handleDeleteFrame}></div>
-        <div className="frames__button frames__button--duplicate"></div>
+        <div className="frames__button frames__button--duplicate" onClick={this.handleDuplicateFrame}></div>
         <canvas
           className="frames__canvas"
           width={width + 'px'}
@@ -93,23 +111,9 @@ class Frame extends React.PureComponent {
 export default class Frames extends React.Component {
   index = 0;
 
-  getNewFrame = (...args) => {
-    /*
-    * create copy frame with imageDate
-    * OR create new frame with widht and height
-    */
-    const imageData = args.length === 1
-      ? args[0]
-      : createNewImageData(...args)
-    return {
-      imageData,
-      id: getId()
-    }
-  }
-
   handleAddFrame = () => {
     const { frameList, width, height, handleFramesListChange, onChangeActiveFrameId } = this.props
-    const newFrame = this.getNewFrame(width, height);
+    const newFrame = Frame.getNewFrame(width, height);
     const newFrameList = [...frameList, newFrame]
     handleFramesListChange(newFrameList)
     onChangeActiveFrameId(newFrame.id)
