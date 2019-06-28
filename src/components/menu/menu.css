@@ -8,6 +8,7 @@
 }
 
 .menu__item {
+  display: block;
   width: 46px;
   height: 46px;
   background-color: var(--color-gray);

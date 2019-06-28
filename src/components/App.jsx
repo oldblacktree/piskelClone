@@ -157,7 +157,11 @@ class App extends React.Component {
           </section>
           <section>
             <ul className="menu">
-              <Menu />
+              <Menu
+                frameImageData={frameImageData}
+                canvasWidth={canvasWidth}
+                canvasHeight={canvasHeight}
+              />
             </ul>
           </section>
           <section className="menu-column"></section>
