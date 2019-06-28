@@ -9,6 +9,7 @@
 
 .menu__item {
   display: block;
+  position: relative;
   width: 46px;
   height: 46px;
   background-color: var(--color-gray);
@@ -38,16 +39,49 @@
   background-repeat: no-repeat;
 }
 
-
 .menu__item--export {
   background-image: url('../../assets/img/icons.png');
   background-position: 0px -182px;
   background-repeat: no-repeat;
 }
 
-
 .menu__item--import {
   background-image: url('../../assets/img/icons.png');
   background-position: -91px -182px;
   background-repeat: no-repeat;
+}
+
+.resizeList{
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  left: -49px;
+  top: -49px;
+  border-right: 2px solid var(--color-background);
+  z-index: 10;
+}
+
+.resizeList__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 46px;
+  height: 46px;
+  background-color: var(--color-gray);
+  margin: 1px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+}
+.menu__item--resize:hover .resizeList {
+  display: block;
+}
+
+.resizeList__item--active {
+  color: var(--color-gold);
+}
+
+.resizeList__item:hover {
+  background-color: #444a;
 }

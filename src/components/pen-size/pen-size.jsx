@@ -29,9 +29,10 @@ export default class PenSize extends React.PureComponent {
   })}
 
   render() {
+    const penSizeItems = this.createPenSizeItems()
     return (
       <ul className="pen-size">
-        {this.createPenSizeItems()}
+        {penSizeItems}
       </ul>
     );
   }

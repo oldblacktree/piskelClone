@@ -413,6 +413,8 @@ export default class Canvas extends React.PureComponent {
 
   render() {
     const { width, height } = this.props
+    this.cellWidth = this.props.width / this.props.cellCount;
+    this.cellHeight = this.props.height / this.props.cellCount;
     return (
       <>
         <canvas

@@ -87,6 +87,7 @@ class App extends React.Component {
   handleInitialImageDataChange = this.updateStateProperty('initialImageData');
   changeActiveFrameId = this.updateStateProperty('activeFrameId');
   changePositionOnCanvas = this.updateStateProperty('positionOnCanvas');
+  changeCanvasCellCount = this.updateStateProperty('canvasCellCount')
 
   render() {
     const {
@@ -161,6 +162,9 @@ class App extends React.Component {
                 frameImageData={frameImageData}
                 canvasWidth={canvasWidth}
                 canvasHeight={canvasHeight}
+                changeCanvasCellCount={this.changeCanvasCellCount}
+                canvasCellCount={canvasCellCount}
+                changePositionOnCanvas={this.changePositionOnCanvas}
               />
             </ul>
           </section>
