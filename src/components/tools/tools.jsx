@@ -3,14 +3,23 @@ import './tools.css';
 
 class Tool extends React.PureComponent {
   render() {
-    const { toolName, isActive, onClick} = this.props;
+    const { toolName, isActive, onClick, keyboardShortCuts} = this.props;
     const activeClass = 'tools-item--active';
     const itemClass = `tools-item--${toolName}`;
+
+    let title;
+    for (let key in keyboardShortCuts) {
+      if (keyboardShortCuts[key].toolName === toolName){
+        title = keyboardShortCuts[key].letter;
+        console.log(title,'as')
+      }
+    }
 
     return (
       <li
         className={`tools-item ${itemClass} ${isActive ? activeClass: ''}`}
         onClick={()=>onClick(toolName)}
+        title={title}
       />
     )
   }
@@ -24,7 +33,6 @@ export default class Tools extends React.PureComponent {
 
   handleKeyDown = (e) => {
     const keyCode = e.keyCode;
-
     if (this.keyboardShortCuts[keyCode]){
       const toolName = this.keyboardShortCuts[keyCode].toolName
       this.props.handleToolChange(toolName)
@@ -65,6 +73,7 @@ export default class Tools extends React.PureComponent {
             toolName={toolName}
             onClick={this.handleToolClick}
             isActive={isActive}
+            keyboardShortCuts={this.keyboardShortCuts}
           />
         )
       })
