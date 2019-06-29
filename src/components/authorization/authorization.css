@@ -1,0 +1,27 @@
+.authorization {
+  display: flex;
+  align-items: center;
+}
+
+.authorization-button {
+  display: block;
+  border: none;
+  color: var(--color-background);
+  background-color: var(--color-gold);
+  padding: 5px 10px;
+  border-radius: 3px;
+  transition-duration: 0.25s;
+  margin: 0 5px;
+}
+.authorization-button:hover {
+  background-color: var(--color-lite-gray);
+}
+
+.authorization-button:active{
+  background-color: var(--color-gray);
+}
+.authorization__greeting {
+  color: #fff;
+  font-size: 18px;
+  margin: 0 5px;
+}

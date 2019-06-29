@@ -35,7 +35,7 @@ class App extends React.Component {
       secondaryColor: "rgba(255, 255, 255, 1)",
       canvasWidth: 640,
       canvasHeight: 640,
-      canvasCellCount: 64,
+      canvasCellCount: 32,
       // activeToolName: this.toolsList[0],
       activeToolName: '',
       // frameList: [
