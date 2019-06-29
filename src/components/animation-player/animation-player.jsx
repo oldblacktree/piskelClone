@@ -11,7 +11,6 @@ export default class AnimationPlayer extends React.PureComponent{
 
   startAnimation =() => {
     if (this.props.framesList.length === 0) {
-      console.log('framesList === 0')
       return
     }
     let i = 0;
@@ -27,7 +26,6 @@ export default class AnimationPlayer extends React.PureComponent{
   }
 
   getCanvasContext = (canvas) => {
-    console.log('canvas AnimationPlalyer',canvas)
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.ctx.beginPath();

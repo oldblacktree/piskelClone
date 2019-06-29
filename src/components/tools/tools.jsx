@@ -11,7 +11,6 @@ class Tool extends React.PureComponent {
     for (let key in keyboardShortCuts) {
       if (keyboardShortCuts[key].toolName === toolName){
         title = keyboardShortCuts[key].letter;
-        console.log(title,'as')
       }
     }
 

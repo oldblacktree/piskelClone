@@ -7,7 +7,8 @@
     "lint": "eslint src/",
     "dev": "webpack-dev-server --open --config webpack.dev.conf.js",
     "build": "webpack --config webpack.build.conf.js",
-    "react-devtools": "react-devtools"
+    "react-devtools": "react-devtools",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,10 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-preset-react": "^6.24.1",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
@@ -35,9 +38,11 @@
     "file-loader": "^4.0.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.8.0",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.7.0",
     "react-devtools": "^3.6.1",
+    "react-test-renderer": "^16.8.6",
     "style-loader": "^0.23.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
