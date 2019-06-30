@@ -26,9 +26,13 @@ export default class Canvas extends React.PureComponent {
   handleCursorPosition = (e) => {
     const x = event.offsetX;
     const y = event.offsetY;
-    this.cellX = Math.floor(x / this.cellWidth);
-    this.cellY = Math.floor(y / this.cellHeight);
-    this.props.changePositionOnCanvas([this.cellX + 1, this.cellY + 1])
+
+    if (this.cellX !== Math.floor(x / this.cellWidth) || this.cellY !== Math.floor(y / this.cellHeight)) {
+      this.cellX = Math.floor(x / this.cellWidth);
+      this.cellY = Math.floor(y / this.cellHeight);
+      this.props.changePositionOnCanvas([this.cellX + 1, this.cellY + 1])
+    }
+
   }
   setDefaultPositionOnCanvas = () => {
     this.props.changePositionOnCanvas([this.props.cellCount, this.props.cellCount])

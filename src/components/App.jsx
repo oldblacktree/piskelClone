@@ -36,7 +36,6 @@ class App extends React.Component {
       canvasWidth: 640,
       canvasHeight: 640,
       canvasCellCount: 32,
-      // activeToolName: this.toolsList[0],
       activeToolName: '',
       // frameList: [
       //   {
@@ -88,6 +87,24 @@ class App extends React.Component {
   changeActiveFrameId = this.updateStateProperty('activeFrameId');
   changePositionOnCanvas = this.updateStateProperty('positionOnCanvas');
   changeCanvasCellCount = this.updateStateProperty('canvasCellCount')
+
+  componentDidUpdate() {
+    const { penSize, primaryColor, secondaryColor, canvasHeight,
+      canvasCellCount, activeToolName } = this.state
+
+    const state = {
+      penSize, primaryColor, secondaryColor, canvasHeight,
+      canvasCellCount, activeToolName
+    }
+
+    localStorage.setItem('state', JSON.stringify(state))
+  }
+
+
+  componentDidMount() {
+    const state = JSON.parse(localStorage.getItem("state"))
+    this.setState(state);
+  }
 
   render() {
     const {
