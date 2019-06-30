@@ -1,6 +1,5 @@
 import './frames.css';
 import React from 'react';
-import { cloneDeep } from 'lodash';
 import { createNewImageData, getId } from '../../helpers/helpers'
 
 class Frame extends React.PureComponent {
@@ -66,7 +65,6 @@ class Frame extends React.PureComponent {
 
   setCanvasRef = (ref) => {
     this.canvasRef = ref
-    console.log('this.canvasRef', this.canvasRef)
   }
 
   handleChangeActiveFrameId =()=>{
@@ -84,7 +82,6 @@ class Frame extends React.PureComponent {
   }
 
   render() {
-    console.log('RENDER FRAME')
     const { props: { width, height, isActive, frameId, onChangeActiveFrameId} } = this
     const activeClass = 'frames__item--active';
 
@@ -118,9 +115,10 @@ export default class Frames extends React.Component {
     onChangeActiveFrameId(newFrame.id)
   }
 
-
   render(){
-    const { props: { frameList, activeFrameId, width, height, handleFramesListChange, onChangeActiveFrameId, onDeleteFrame}} = this;
+    const {
+      frameList, activeFrameId, width, height, handleFramesListChange, onChangeActiveFrameId, onDeleteFrame,
+    } = this.props;
     const frames = frameList.map(({imageData, id}) => {
       return (
         <Frame
@@ -153,5 +151,4 @@ export default class Frames extends React.Component {
 }
 
 const getNewFrame = Frame.getNewFrame
-export {getNewFrame}
-
+export { getNewFrame }

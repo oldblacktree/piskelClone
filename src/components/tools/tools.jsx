@@ -2,6 +2,7 @@ import React from 'react';
 import './tools.css';
 
 class Tool extends React.PureComponent {
+
   render() {
     const { toolName, isActive, onClick, keyboardShortCuts} = this.props;
     const activeClass = 'tools-item--active';
@@ -24,7 +25,6 @@ class Tool extends React.PureComponent {
   }
 }
 
-
 export default class Tools extends React.PureComponent {
   handleToolClick = (toolName) => {
     return this.props.handleToolChange(toolName);
@@ -32,6 +32,7 @@ export default class Tools extends React.PureComponent {
 
   handleKeyDown = (e) => {
     const keyCode = e.keyCode;
+
     if (this.keyboardShortCuts[keyCode]){
       const toolName = this.keyboardShortCuts[keyCode].toolName
       this.props.handleToolChange(toolName)

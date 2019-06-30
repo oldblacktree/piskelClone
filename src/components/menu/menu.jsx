@@ -1,6 +1,5 @@
 import './menu.css';
 import React from 'react'
-import { getNewFrame } from '../frames/frames.jsx';
 
 export default class Menu extends React.PureComponent {
   constructor(props) {
@@ -17,7 +16,6 @@ export default class Menu extends React.PureComponent {
     if (frameImageData) ctx.putImageData(frameImageData,0,0);
     return canvas.toDataURL('image/png')
   }
-
 
   handleResizeItemClik = (item) => () => {
     this.props.changeCanvasCellCount(item);
@@ -43,11 +41,9 @@ export default class Menu extends React.PureComponent {
     })
   }
 
-
   render() {
   const resizeItems = this.createResizeItems()
   this.dataURL = this.getDataURL()
-
 
     return (
       <>
@@ -66,5 +62,3 @@ export default class Menu extends React.PureComponent {
     )
   }
 };
-
-

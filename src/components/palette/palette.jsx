@@ -1,6 +1,7 @@
 import React from 'react';
 import './palette.css';
 import { hexToRgbA } from '../../helpers/helpers'
+
 export default class Palette extends React.PureComponent {
 
   handlePrimaryColorChange = (e) => {
@@ -31,4 +32,3 @@ export default class Palette extends React.PureComponent {
     )
   }
 };
-

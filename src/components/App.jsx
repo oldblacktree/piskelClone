@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+
 import Header from './header/header.jsx';
 import PenSize from './pen-size/pen-size.jsx';
 import Tools from './tools/tools.jsx';
@@ -9,7 +10,6 @@ import Canvas from './canvas/canvas.jsx'
 import Frames, { getNewFrame } from './frames/frames.jsx';
 import AnimationPlayer from './animation-player/animation-player.jsx'
 import PositionOnCanvas from './positionOnCanvas/positionOnCanvas.jsx'
-import {createNewImageData, getId} from '../helpers/helpers'
 import initialState from './InitialAppState'
 import Menu from './menu/menu.jsx'
 
@@ -28,33 +28,19 @@ class App extends React.Component {
       'color-picker'
     ]
 
-      // frameList: [
-      //   {
-      //     imageData: Object
-      //     id: Int,
-      //   },
-      // ],
-    const firstFrame = getNewFrame( initialState.canvasWidth, initialState.canvasHeight)
+    const { canvasWidth, canvasHeight, canvasCellCount} = initialState
+    const firstFrame = getNewFrame(canvasWidth, canvasHeight)
     this.state = {
-      penSize: 1,
-      primaryColor: "rgba(0, 0, 0, 1)",
-      secondaryColor: "rgba(255, 255, 255, 1)",
-      canvasWidth: 640,
-      canvasHeight: 640,
-      canvasCellCount: 32,
+      ...initialState,
       activeToolName: 'mirror',
-      frameList: [
-        firstFrame,
-      ],
+      frameList: [firstFrame],
       activeFrameId: firstFrame.id,
-      // positionOnCanvas: [cellX, cellY]
-      positionOnCanvas: [initialState.canvasCellCount, initialState.canvasCellCount],
+      positionOnCanvas: [canvasCellCount, canvasCellCount]
     }
   }
 
   componentDidMount() {
-    const state = JSON.parse(localStorage.getItem("state"))
-    console.log('componentDidMount', state)
+    const state = JSON.parse(localStorage.getItem("state"));
     this.setState(state);
   }
 
@@ -154,7 +140,6 @@ class App extends React.Component {
               imageData={frameImageData}
               cellCount={canvasCellCount}
               activeToolName={activeToolName}
-              // activeFrameId={activeFrameId}
               updateFrameList={this.handleUpdateActiveFrameImageData}
               handlePrimaryColorChange={this.handlePrimaryColorChange}
               changePositionOnCanvas={this.changePositionOnCanvas}
@@ -190,9 +175,5 @@ class App extends React.Component {
   }
 }
 
-
 // ========================================
-
 ReactDOM.render(<App />,document.getElementById('root'));
-
-

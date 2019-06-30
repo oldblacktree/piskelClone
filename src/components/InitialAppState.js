@@ -5,10 +5,17 @@ const initialState = {
   canvasWidth: 640,
   canvasHeight: 640,
   canvasCellCount: 32,
-  // activeToolName: this.toolsList[0],
   activeToolName: '',
+  // frameList: [
+  //   {
+  //     imageData: Object
+  //     id: Int,
+  //   },
+  // ],
   frameList: [],
   activeFrameId: '',
+  // positionOnCanvas: [cellX, cellY]
+  positionOnCanvas: []
 };
 
 export default initialState;

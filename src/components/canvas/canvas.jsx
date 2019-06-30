@@ -1,14 +1,6 @@
 import React from 'react';
 import './canvas.css';
-import { rgbaArr } from '../../helpers/helpers'
-import { cloneDeep } from 'lodash';
-
-// class ToolService {
-//   constructor(canvasRef) {
-//     this.canvasRef = canvasRef
-//   }
-// }
-
+import { rgbaArr, notImplementedAction } from '../../helpers/helpers'
 
 export default class Canvas extends React.PureComponent {
   constructor(props){
@@ -55,7 +47,6 @@ export default class Canvas extends React.PureComponent {
   }
 
   // -------------------------pen--------------------------------
-
   drawPenCell = () => {
     const { primaryColor, penSize } = this.props;
     this.ctx.beginPath();
@@ -94,6 +85,7 @@ export default class Canvas extends React.PureComponent {
     this.canvasRef.removeEventListener('mousedown', this.onMouseDownPen)
     this.canvasRef.removeEventListener('mouseup', this.onMouseUpPen)
   }
+
   // -------------------------eraser--------------------------
   drawEraserCell = () => {
     const { penSize } = this.props;
@@ -132,6 +124,7 @@ export default class Canvas extends React.PureComponent {
     this.canvasRef.removeEventListener('mousedown', this.onMouseDownEraser)
     this.canvasRef.removeEventListener('mouseup', this.onMouseUpEraser)
   }
+
   //--------------------------lighten--------------------------
   drawLightenCell = () => {
     const { penSize } = this.props;
@@ -170,6 +163,7 @@ export default class Canvas extends React.PureComponent {
     this.canvasRef.removeEventListener('mousedown', this.onMouseDownLighten)
     this.canvasRef.removeEventListener('mouseup', this.onMouseUpLighten)
   }
+
   // -------------------------mirror--------------------------------
   drawMirrorCell = () => {
     const { primaryColor, penSize } = this.props;
@@ -213,19 +207,13 @@ export default class Canvas extends React.PureComponent {
     this.canvasRef.removeEventListener('mousedown', this.onMouseDownMirror)
     this.canvasRef.removeEventListener('mouseup', this.onMouseUpMirror)
   }
-//------------------------------------PaintBuchetAll-----------------------------
 
+//------------------------------------PaintBuchetAll-----------------------------
   drawPaintBucketAll = (e) => {
 
     const [pickedRColor, pickedGColor, pickedBColor] = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data;
-    console.log(this.props.primaryColor)
     const [primaryRColor, primaryGColor, primaryBColor] = rgbaArr(this.props.primaryColor);
-    console.log(primaryRColor, primaryGColor, primaryBColor)
     const ImageData = this.ctx.getImageData(0, 0, this.props.width, this.props.height);
-
-
-    console.log(primaryRColor, primaryGColor, primaryBColor)
-    console.log(ImageData)
 
     for (let i = 0; i < ImageData.data.length; i = i + 4) {
       if (ImageData.data[i] === pickedRColor &&
@@ -316,7 +304,6 @@ export default class Canvas extends React.PureComponent {
     this.canvasRef.removeEventListener('mousedown', this.onMouseDownDithering)
     this.canvasRef.removeEventListener('mouseup', this.onMouseUpDithering)
   }
-  // ---------------------------------------------------------
 
   toolsList = {
     'pen': {
@@ -328,8 +315,8 @@ export default class Canvas extends React.PureComponent {
       reset: this.resetMirror
     },
     'paint-bucket': {
-      set: () => { console.log('set paint-bucket') },
-      reset: () => { console.log('reset paint-bucket') }
+      set: () => { notImplementedAction('paint-bucket') },
+      reset: () => { }
     },
     'paint-bucket-all': {
       set: this.setPaintBucketAll,
@@ -340,32 +327,32 @@ export default class Canvas extends React.PureComponent {
       reset: this.resetEraser
     },
     'stroke': {
-      set: () => { console.log('set stroke') },
-      reset: () => { console.log('reset stroke') }
+      set: () => { notImplementedAction('stroke') },
+      reset: () => { }
     },
     'rectangle': {
-      set: () => { console.log('set rectangle') },
-      reset: () => { console.log('reset rectangle') }
+      set: () => { notImplementedAction('rectangle') },
+      reset: () => { }
     },
     'circle': {
-      set: () => { console.log('set circle') },
-      reset: () => { console.log('reset circle') }
+      set: () => { notImplementedAction('circle') },
+      reset: () => { }
     },
     'move': {
-      set: () => { console.log('set move') },
-      reset: () => { console.log('reset move') }
+      set: () => { notImplementedAction('move')},
+      reset: () => { }
     },
     'shape-selection': {
-      set: () => { console.log('set shape-selection') },
-      reset: () => { console.log('reset shape-selection') }
+      set: () => { notImplementedAction('shape-selection')},
+      reset: () => { }
     },
     'rectangle-selection': {
-      set: () => { console.log('set rectangle-selection') },
-      reset: () => { console.log('reset rectangle-selection') }
+      set: () => { notImplementedAction('rectangle-selection') },
+      reset: () => { }
     },
     'lasso-selection': {
-      set: () => { console.log('set lasso-selection') },
-      reset: () => { console.log('reset lasso-selection') }
+      set: () => { notImplementedAction('lasso-selection') },
+      reset: () => { }
     },
     'lighten': {
       set: this.setLighten,
@@ -391,16 +378,11 @@ export default class Canvas extends React.PureComponent {
   componentDidMount() {
     this.ctx.putImageData(this.props.imageData, 0, 0)
     this.toolsList[this.props.activeToolName].set()
-
-    // this.toolService = new ToolService(this.canvasRef)
-    // this.toolService.drawPenCell(color, penSize)
   }
 
   componentDidUpdate() {
-    // const { imageData } = this.props
-    // if (imageData.data) {
     this.ctx.putImageData(this.props.imageData, 0, 0)
-    // }
+
     if (this.props.activeToolName !== this.prevToolName) {
       if (this.prevToolName !== '') {
         this.toolsList[this.prevToolName].reset()

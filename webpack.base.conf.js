@@ -18,22 +18,14 @@ module.exports = {
 
   entry: {
     app: PATHS.src
-    // app: `${PATHS.src}/index.js`,
   },
   output: {
     filename: `${PATHS.assets}js/[name].js`,
     path: PATHS.dist,
     publicPath: '/'
   },
-  // devtool: 'source-map',
-  // // devServer: {
-  // //   contentBase: path.join(__dirname, 'dist'),
-  // //   compress: true,
-  // //   port: 9000,
-  //  // },
   module: {
     rules: [
-      // { enforce: 'pre', test: /\.js$/, loader: 'eslint-loader' },
       {
         test: /\.html$/,
         exclude: /node_modules/,
@@ -45,10 +37,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: '/node_modules'
-        // options: {
-        //   plugins: ['lodash'],
-        //   presets: [['env', { modules: false, targets: { node: 4 } }]],
-        // },
       },
       {
         test: /\.jsx$/,
@@ -63,7 +51,6 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          // name: 'qwe/[name].[ext]',
           name: `${PATHS.assets}img/[name].[ext]`
         }
       },
