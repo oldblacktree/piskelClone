@@ -84,10 +84,9 @@ class Frame extends React.PureComponent {
   }
 
   render() {
-
+    console.log('RENDER FRAME')
     const { props: { width, height, isActive, frameId, onChangeActiveFrameId} } = this
     const activeClass = 'frames__item--active';
-    console.log('RENDER Frame')
 
     return (
       <li className={`frames__item ${isActive ? activeClass : ''}`} >
@@ -123,7 +122,6 @@ export default class Frames extends React.Component {
   render(){
     const { props: { frameList, activeFrameId, width, height, handleFramesListChange, onChangeActiveFrameId, onDeleteFrame}} = this;
     const frames = frameList.map(({imageData, id}) => {
-
       return (
         <Frame
           key={id}

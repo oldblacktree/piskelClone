@@ -28,6 +28,12 @@ class App extends React.Component {
       'color-picker'
     ]
 
+      // frameList: [
+      //   {
+      //     imageData: Object
+      //     id: Int,
+      //   },
+      // ],
     const firstFrame = getNewFrame( initialState.canvasWidth, initialState.canvasHeight)
     this.state = {
       penSize: 1,
@@ -36,13 +42,7 @@ class App extends React.Component {
       canvasWidth: 640,
       canvasHeight: 640,
       canvasCellCount: 32,
-      activeToolName: '',
-      // frameList: [
-      //   {
-      //     imageData: {}
-      //     id: int,
-      //   },
-      // ],
+      activeToolName: 'mirror',
       frameList: [
         firstFrame,
       ],
@@ -52,10 +52,46 @@ class App extends React.Component {
     }
   }
 
-  //
+  componentDidMount() {
+    const state = JSON.parse(localStorage.getItem("state"))
+    console.log('componentDidMount', state)
+    this.setState(state);
+  }
+
+  updateStateProperty = (property, shoudSaveStorage = true) => (value) => {
+    if (shoudSaveStorage) {
+      this.setState({ [property]: value }, this.updateStorage)
+    } else {
+      this.setState({ [property]: value })
+    };
+  }
+
+  updateStorage = () => {
+    const { frameList, activeFrameId, ...other } = this.state;
+    localStorage.setItem('state', JSON.stringify(other))
+  }
+
+  handlePenSizeClick = this.updateStateProperty('penSize');
+  handleToolChange = this.updateStateProperty('activeToolName');
+  handlePrimaryColorChange = this.updateStateProperty('primaryColor');
+  handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
+  handleFramesListChange = this.updateStateProperty('frameList');
+  handleInitialImageDataChange = this.updateStateProperty('initialImageData');
+  changeActiveFrameId = this.updateStateProperty('activeFrameId');
+  changePositionOnCanvas = this.updateStateProperty('positionOnCanvas', false);
+  changeCanvasCellCount = this.updateStateProperty('canvasCellCount')
+
+  handleSwap = () => {
+    const { primaryColor, secondaryColor } = this.state;
+
+    this.setState({
+      primaryColor: secondaryColor,
+      secondaryColor: primaryColor,
+    }, this.updateStorage)
+  }
+
   handleUpdateActiveFrameImageData = (newImageData) => {
     const { frameList, activeFrameId } = this.state
-    const frame = frameList.find(({ id }) => id === activeFrameId)
 
     frameList.forEach((frame) => {
       if (frame.id === activeFrameId) {
@@ -66,44 +102,6 @@ class App extends React.Component {
     this.setState({
       frameList,
     })
-  }
-
-  handleSwap = () => {
-    const { primaryColor, secondaryColor} = this.state;
-
-    this.setState({
-      primaryColor: secondaryColor,
-      secondaryColor: primaryColor,
-    })
-  }
-
-  updateStateProperty = (property) => (value) => { this.setState({ [property]: value }) };
-  handlePenSizeClick = this.updateStateProperty('penSize');
-  handleToolChange = this.updateStateProperty('activeToolName');
-  handlePrimaryColorChange = this.updateStateProperty('primaryColor');
-  handleSecondaryColorChange = this.updateStateProperty('secondaryColor');
-  handleFramesListChange = this.updateStateProperty('frameList');
-  handleInitialImageDataChange = this.updateStateProperty('initialImageData');
-  changeActiveFrameId = this.updateStateProperty('activeFrameId');
-  changePositionOnCanvas = this.updateStateProperty('positionOnCanvas');
-  changeCanvasCellCount = this.updateStateProperty('canvasCellCount')
-
-  componentDidUpdate() {
-    const { penSize, primaryColor, secondaryColor, canvasHeight,
-      canvasCellCount, activeToolName } = this.state
-
-    const state = {
-      penSize, primaryColor, secondaryColor, canvasHeight,
-      canvasCellCount, activeToolName
-    }
-
-    localStorage.setItem('state', JSON.stringify(state))
-  }
-
-
-  componentDidMount() {
-    const state = JSON.parse(localStorage.getItem("state"))
-    this.setState(state);
   }
 
   render() {

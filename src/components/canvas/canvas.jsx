@@ -390,6 +390,8 @@ export default class Canvas extends React.PureComponent {
 
   componentDidMount() {
     this.ctx.putImageData(this.props.imageData, 0, 0)
+    this.toolsList[this.props.activeToolName].set()
+
     // this.toolService = new ToolService(this.canvasRef)
     // this.toolService.drawPenCell(color, penSize)
   }
